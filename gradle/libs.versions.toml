@@ -17,6 +17,8 @@ ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 
 hilt = "2.44.2"
+appcompat = "1.6.1"
+material = "1.10.0"
 
 [libraries]
 androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradleVersion" }
@@ -52,6 +54,8 @@ hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 [bundles]
 compose-ui = ["compose-ui","compose-graphics","compose-preview"]
 
@@ -59,3 +63,4 @@ compose-ui = ["compose-ui","compose-graphics","compose-preview"]
 android-application = { id = "com.android.application", version.ref = "androidGradleVersion" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
 android-library = { id = "com.android.library", version.ref = "androidGradleVersion" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinGradleVersion" }

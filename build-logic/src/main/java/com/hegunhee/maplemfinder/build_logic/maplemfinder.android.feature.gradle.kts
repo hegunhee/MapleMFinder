@@ -1,11 +1,9 @@
-package com.hegunhee.maplemfinder.build_logic
-
-import com.hegunhee.maplemfinder.build_logic.setting.configureComposeAndroid
 import com.hegunhee.maplemfinder.build_logic.setting.configureHiltAndroid
-import com.hegunhee.maplemfinder.build_logic.setting.configureKotlinAndroid
+import com.hegunhee.maplemfinder.build_logic.setup.libs
 
 plugins {
-    id("com.android.library")
+    id("maplemfinder.android.library")
+    id("maplemfinder.android.compose")
 }
 
 android {
@@ -15,5 +13,13 @@ android {
 }
 
 configureHiltAndroid()
-configureComposeAndroid()
-configureKotlinAndroid()
+
+dependencies {
+    val libs = project.extensions.libs
+    implementation(libs.findLibrary("core.ktx").get())
+    implementation(libs.findLibrary("appcompat").get())
+    implementation(libs.findLibrary("material").get())
+
+    implementation(libs.findLibrary("lifecycle-ktx").get())
+    implementation(libs.findLibrary("activity-compose").get())
+}
