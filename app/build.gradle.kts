@@ -23,9 +23,11 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":core:domain"))
+    implementation(project(":feature:main"))
+
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.ktx)
     implementation(libs.activity.compose)
-
-    implementation(project(":feature:main"))
 }
