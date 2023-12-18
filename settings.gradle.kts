@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "MapleMFinder"
 include(":app")
 include(":feature:main")
+include(":core:domain")

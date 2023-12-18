@@ -5,6 +5,12 @@ androidxComposeCompiler = "1.4.3"
 
 core = "1.9.0"
 
+kotlin-stdlib = "1.7.10"
+
+coroutine = "1.6.4"
+
+javax-inject = "1"
+
 lifecycle = "2.6.2"
 
 activity-compose = "1.8.1"
@@ -19,11 +25,14 @@ espresso-core = "3.5.1"
 hilt = "2.44.2"
 appcompat = "1.6.1"
 material = "1.10.0"
+org-jetbrains-kotlin-jvm = "1.8.10"
 
 [libraries]
 androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradleVersion" }
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradleVersion" }
 hiltGradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+
+kotlin-stdlib = {module = "org.jetbrains.kotlin:kotlin-stdlib",version.ref = "kotlin-stdlib"}
 
 core-ktx = {module = "androidx.core:core-ktx",version.ref = "core"}
 
@@ -50,6 +59,10 @@ compose-junit = {module = "androidx.compose.ui:ui-test-junit4"}
 ui-tooling = {module = "androidx.compose.ui:ui-tooling"}
 ui-test-manifest = {module = "androidx.compose.ui:ui-test-manifest"}
 
+javax-inject = {module ="javax.inject:javax.inject",version.ref ="javax-inject"}
+
+coroutine-core = {module ="org.jetbrains.kotlinx:kotlinx-coroutines-core",version.ref="coroutine"}
+
 hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 
@@ -64,3 +77,4 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
 android-library = { id = "com.android.library", version.ref = "androidGradleVersion" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinGradleVersion" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
