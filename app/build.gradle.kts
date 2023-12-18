@@ -1,16 +1,11 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id("maplemfinder.android.application")
 }
 
 android {
     namespace = "com.hegunhee.maplemfinder.app"
-    compileSdk = 34
-
     defaultConfig {
         applicationId = "com.hegunhee.maplemfinder.app"
-        minSdk = 24
-        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -20,28 +15,6 @@ android {
         }
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -55,19 +28,4 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.ktx)
     implementation(libs.activity.compose)
-    implementation(platform(libs.compose.bom))
-
-    implementation(libs.bundles.compose.ui)
-    implementation(libs.material3)
-
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.compose.bom.test))
-    androidTestImplementation(libs.compose.junit)
-
-    debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
 }
