@@ -1,5 +1,6 @@
 plugins {
     `kotlin-dsl`
+    `kotlin-dsl-precompiled-script-plugins`
 }
 
 repositories {
@@ -14,7 +15,7 @@ java {
 }
 
 dependencies {
-    compileOnly(libs.androidGradlePlugin)
-    compileOnly(libs.kotlinGradlePlugin)
-    compileOnly(libs.hiltGradlePlugin)
+    implementation(libs.androidGradlePlugin)
+    implementation(libs.kotlinGradlePlugin)
+    implementation(libs.hiltGradlePlugin)
 }
