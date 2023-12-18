@@ -1,6 +1,7 @@
 [versions]
 androidGradleVersion = "8.0.2"
 kotlinGradleVersion = "1.8.10"
+androidxComposeCompiler = "1.4.3"
 
 core = "1.9.0"
 
@@ -47,6 +48,10 @@ compose-junit = {module = "androidx.compose.ui:ui-test-junit4"}
 ui-tooling = {module = "androidx.compose.ui:ui-tooling"}
 ui-test-manifest = {module = "androidx.compose.ui:ui-test-manifest"}
 
+hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 [bundles]
 compose-ui = ["compose-ui","compose-graphics","compose-preview"]
 
