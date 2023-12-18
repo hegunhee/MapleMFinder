@@ -58,3 +58,4 @@ compose-ui = ["compose-ui","compose-graphics","compose-preview"]
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradleVersion" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+android-library = { id = "com.android.library", version.ref = "androidGradleVersion" }
