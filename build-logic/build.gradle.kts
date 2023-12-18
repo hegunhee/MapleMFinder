@@ -19,3 +19,16 @@ dependencies {
     implementation(libs.kotlinGradlePlugin)
     implementation(libs.hiltGradlePlugin)
 }
+
+gradlePlugin {
+    plugins {
+        register("HiltAndroid") {
+            id = "maplemfinder.android.hilt"
+            implementationClass = "com.hegunhee.maplemfinder.build_logic.setting.HiltAndroidPlugin"
+        }
+        register("HiltKotlin") {
+            id = "maplemfinder.kotlin.hilt"
+            implementationClass = "com.hegunhee.maplemfinder.build_logic.setting.HiltKotlinPlugin"
+        }
+    }
+}
