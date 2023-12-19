@@ -27,6 +27,8 @@ appcompat = "1.6.1"
 material = "1.10.0"
 org-jetbrains-kotlin-jvm = "1.8.10"
 
+hilt-navigation = "1.0.0"
+
 [libraries]
 androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradleVersion" }
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradleVersion" }
@@ -37,6 +39,8 @@ kotlin-stdlib = {module = "org.jetbrains.kotlin:kotlin-stdlib",version.ref = "ko
 core-ktx = {module = "androidx.core:core-ktx",version.ref = "core"}
 
 lifecycle-ktx = {module = "androidx.lifecycle:lifecycle-runtime-ktx",version.ref = "lifecycle"}
+lifecycle-viewmodel = {module = "androidx.lifecycle:lifecycle-viewmodel-compose",version.ref = "lifecycle"}
+hilt-navigation = {module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hilt-navigation"}
 
 activity-compose = {module = "androidx.activity:activity-compose",version.ref = "activity-compose"}
 compose-bom = {module = "androidx.compose:compose-bom",version.ref ="compose-bom"}
