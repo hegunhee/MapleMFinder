@@ -11,4 +11,6 @@ class TestViewModel @Inject constructor(private val getThreeUseCase: GetThreeUse
     fun getThree() : Int {
         return getThreeUseCase()
     }
+
+    //TEST
 }
