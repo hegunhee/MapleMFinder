@@ -18,4 +18,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation(libs.bundles.retrofit2)
+    implementation(libs.bundles.moshi)
 }
