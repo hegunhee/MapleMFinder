@@ -8,6 +8,7 @@ buildscript {
     dependencies{
         classpath (libs.androidGradlePlugin)
         classpath (libs.kotlinGradlePlugin)
+        classpath (libs.secretsGradlePlugin)
     }
 }
 plugins {
