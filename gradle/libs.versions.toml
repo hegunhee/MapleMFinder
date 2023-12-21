@@ -3,6 +3,7 @@ androidGradleVersion = "8.0.2"
 kotlinGradleVersion = "1.8.10"
 androidxComposeCompiler = "1.4.3"
 org-jetbrains-kotlin-jvm = "1.8.10"
+secretsGradleVersion = "2.0.1"
 
 core = "1.9.0"
 kotlin-stdlib = "1.7.10"
@@ -30,6 +31,7 @@ moshi = "1.9.3"
 androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradleVersion" }
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradleVersion" }
 hiltGradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+secretsGradlePlugin = { group = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", name = "secrets-gradle-plugin",version.ref = "secretsGradleVersion"}
 
 kotlin-stdlib = {module = "org.jetbrains.kotlin:kotlin-stdlib",version.ref = "kotlin-stdlib"}
 core-ktx = {module = "androidx.core:core-ktx",version.ref = "core"}
