@@ -6,7 +6,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
 
-class RetrofitUnitTest {
+class OcidUnitTest {
 
     private lateinit var mapleMApi : MapleMApi
     @Before
@@ -49,8 +49,6 @@ class RetrofitUnitTest {
         }
     }
 
-    private val characterName = "지존"
-    private val worldName = "아케인"
     private val requestOcid = "9857d4a03a080b40cad682141ae3b0729c8695ba60dec42d9da8928f8ed9773c"
 
     private val invailedCharacterName = "ㅁ나어민어ㅏㅁ너이"
