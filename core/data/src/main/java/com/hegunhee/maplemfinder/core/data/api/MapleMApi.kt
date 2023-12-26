@@ -1,6 +1,7 @@
 package com.hegunhee.maplemfinder.core.data.api
 
 import com.hegunhee.maplemfinder.core.data.api.model.CharacterInfoResponse
+import com.hegunhee.maplemfinder.core.data.api.model.CharacterItemResponse
 import com.hegunhee.maplemfinder.core.data.api.model.CharacterStatusResponse
 import com.hegunhee.maplemfinder.core.data.api.model.OcidResponse
 import retrofit2.http.GET
@@ -23,4 +24,9 @@ interface MapleMApi {
     suspend fun getCharacterStatus(
         @Query("ocid") ocid : String
     ) : CharacterStatusResponse
+
+    @GET("v1/character/item-equipment")
+    suspend fun getCharacterItem(
+        @Query("ocid") ocid : String
+    ) : CharacterItemResponse
 }
