@@ -4,9 +4,6 @@ import com.hegunhee.maplemfinder.core.domain.repository.Repository
 import javax.inject.Inject
 
 class DefaultRepository @Inject constructor() : Repository {
-
-    override fun getThree(): Int {
-        return 3
     }
 
 
