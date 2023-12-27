@@ -1,11 +1,11 @@
 plugins {
-    id("maplemfinder.android.library")
-    id("maplemfinder.android.hilt")
+    id("java-library")
+    id("org.jetbrains.kotlin.jvm")
 }
 
-android {
-    namespace = "com.hegunhee.maplefinder.core.model"
-
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
