@@ -31,4 +31,5 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.ktx)
     implementation(libs.activity.compose)
+    implementation(libs.compose.navigation)
 }
