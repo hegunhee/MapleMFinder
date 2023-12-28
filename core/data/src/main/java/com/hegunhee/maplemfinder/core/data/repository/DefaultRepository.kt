@@ -1,6 +1,7 @@
 package com.hegunhee.maplemfinder.core.data.repository
 
 import com.hegunhee.maplefinder.core.model.mapleM.Character
+import com.hegunhee.maplefinder.core.model.mapleM.worldList
 import com.hegunhee.maplemfinder.core.data.dataSource.remote.MapleMRemoteDataSource
 import com.hegunhee.maplemfinder.core.data.mapper.toCharacterDate
 import com.hegunhee.maplemfinder.core.data.mapper.toCharacterInfo
@@ -31,6 +32,8 @@ class DefaultRepository @Inject constructor(
             )
         }
     }
+
+    override fun getWorldNameList(): List<String> = worldList
 
 
 }
