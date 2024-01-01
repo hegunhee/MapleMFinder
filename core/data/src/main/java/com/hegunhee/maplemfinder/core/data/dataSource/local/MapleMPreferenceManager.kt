@@ -42,8 +42,8 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
         if(ocidList.contains(ocid)) {
             return
         }
-        (ocidList + ocid).let { addedList ->
-            prefs.edit {
+        prefs.edit {
+            (ocidList + ocid).let { addedList ->
                 putString(likeCharacterKey,addedList.toJson())
                 apply()
             }
@@ -55,9 +55,9 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
         if(!ocidList.contains(ocid)) {
             return
         }
-        ocidList.filter { it == ocid }.let { changedList ->
-            prefs.edit {
-                putString(likeCharacterKey,changedList.toJson())
+        prefs.edit {
+            ocidList.filter { it != ocid }.let { changedList ->
+                putString(likeCharacterKey, changedList.toJson())
                 apply()
             }
         }
