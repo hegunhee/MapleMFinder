@@ -4,11 +4,9 @@ plugins {
 }
 
 android {
-    namespace = "com.hegunhee.maplemfinder.core.ui"
+    namespace = "com.hegunhee.maplemfinder.core.designsystem"
 }
 
 dependencies {
-
     implementation(project(":core:model"))
-    implementation(project(":core:designsystem"))
 }
