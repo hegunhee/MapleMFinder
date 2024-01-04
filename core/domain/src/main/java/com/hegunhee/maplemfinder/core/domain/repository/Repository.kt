@@ -7,4 +7,8 @@ interface Repository {
     suspend fun getCharacterTotalInfo(name : String, worldName : String) : Result<Character>
 
     fun getWorldNameList() : List<String>
+
+    suspend fun getMainCharacter() : Result<Character>
+
+    fun isFavoriteListEmpty() : Result<Boolean>
 }

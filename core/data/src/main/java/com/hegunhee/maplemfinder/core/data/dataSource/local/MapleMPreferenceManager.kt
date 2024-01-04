@@ -28,7 +28,7 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
         }
     }
 
-    fun getLikeOcidList() : List<String> {
+    fun getFavoriteOcidList() : List<String> {
         val prefsJson = prefs.getString(likeCharacterKey, emptyOcid)
         return if(prefsJson.isNullOrBlank()) {
             emptyList()
@@ -37,8 +37,12 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
         }
     }
 
-    fun addLikeOcid(ocid : String) {
-        val ocidList = getLikeOcidList()
+    fun isFavoriteListEmpty() : Boolean {
+        return getFavoriteOcidList().isEmpty()
+    }
+
+    fun addFavoriteOcid(ocid : String) {
+        val ocidList = getFavoriteOcidList()
         if(ocidList.contains(ocid)) {
             return
         }
@@ -50,8 +54,8 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
         }
     }
 
-    fun deleteLikeOcid(ocid : String) {
-        val ocidList = getLikeOcidList()
+    fun deleteFavoriteOcid(ocid : String) {
+        val ocidList = getFavoriteOcidList()
         if(!ocidList.contains(ocid)) {
             return
         }
