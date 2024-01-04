@@ -8,9 +8,13 @@ fun NavController.navigateMain() {
     navigate(MainNavGraph.mainRoute)
 }
 
-fun NavGraphBuilder.mainNavGraph() {
+fun NavGraphBuilder.mainNavGraph(
+    onSearchClick : () -> Unit
+) {
     composable(route = MainNavGraph.mainRoute) {
-        MainScreenRoot()
+        MainScreenRoot(
+            onSearchClick = onSearchClick
+        )
     }
 }
 object MainNavGraph {
