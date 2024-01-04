@@ -2,6 +2,7 @@ package com.hegunhee.maplemfinder.core.data.repository
 
 import com.hegunhee.maplefinder.core.model.mapleM.Character
 import com.hegunhee.maplefinder.core.model.mapleM.worldList
+import com.hegunhee.maplemfinder.core.data.dataSource.local.MapleMLocalDataSource
 import com.hegunhee.maplemfinder.core.data.dataSource.remote.MapleMRemoteDataSource
 import com.hegunhee.maplemfinder.core.data.mapper.toCharacterDate
 import com.hegunhee.maplemfinder.core.data.mapper.toCharacterInfo
@@ -11,8 +12,10 @@ import com.hegunhee.maplemfinder.core.domain.repository.Repository
 import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(
+    private val mapleMLocalDataSource : MapleMLocalDataSource,
     private val mapleMRemoteDataSource: MapleMRemoteDataSource
 ) : Repository {
+
     override suspend fun getCharacterTotalInfo(name: String, worldName: String): Result<Character> {
         return runCatching {
             val ocid = mapleMRemoteDataSource.getCharacterOcid(name,worldName).id
@@ -34,6 +37,34 @@ class DefaultRepository @Inject constructor(
     }
 
     override fun getWorldNameList(): List<String> = worldList
+
+    override suspend fun getMainCharacter(): Result<Character> {
+        val ocid = mapleMLocalDataSource.getMainOcid()
+        return if(ocid == "") {
+            runCatching { Character.EMPTY }
+        }else {
+            runCatching {
+                val infoResponse = mapleMRemoteDataSource.getCharacterInfo(ocid = ocid)
+                val characterInfo = infoResponse.toCharacterInfo()
+                val characterDate = infoResponse.toCharacterDate()
+                val characterItem = mapleMRemoteDataSource.getCharacterItem(ocid).toItemList()
+                val characterStatus = mapleMRemoteDataSource.getCharacterStatus(ocid).toStatusList()
+                Character(
+                    ocid = ocid,
+                    name = infoResponse.characterName,
+                    worldName = infoResponse.worldName,
+                    date = characterDate,
+                    equippedItemList = characterItem,
+                    info = characterInfo,
+                    statusList = characterStatus
+                )
+            }
+        }
+    }
+
+    override fun isFavoriteListEmpty(): Result<Boolean> {
+        return runCatching{ mapleMLocalDataSource.isFavoriteListEmpty() }
+    }
 
 
 }
