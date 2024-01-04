@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.hegunhee.maplemfinder.core.ui.card.MainFavoriteButton
 import com.hegunhee.maplemfinder.core.ui.card.MainLikeButton
 import com.hegunhee.maplemfinder.core.ui.card.MainSearchButton
 
@@ -18,5 +19,7 @@ private fun MainScreen() {
     Column(modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp)) {
         MainSearchButton()
         MainLikeButton()
+        MainFavoriteButton(isFavoriteItemContain = false)
+        MainFavoriteButton(isFavoriteItemContain = true)
     }
 }

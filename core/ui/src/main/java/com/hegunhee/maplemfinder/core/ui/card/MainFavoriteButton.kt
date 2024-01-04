@@ -13,19 +13,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import com.hegunhee.maplemfinder.core.designsystem.R
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hegunhee.maplemfinder.core.designsystem.theme.LikeColor
+import com.hegunhee.maplemfinder.core.designsystem.R
+import com.hegunhee.maplemfinder.core.designsystem.theme.DarkYellow
 import com.hegunhee.maplemfinder.core.designsystem.theme.MainFontSize
 import com.hegunhee.maplemfinder.core.designsystem.theme.MainTopButtonSize
 import com.hegunhee.maplemfinder.core.designsystem.theme.NormalDottedStroke
+import com.hegunhee.maplemfinder.core.designsystem.theme.NormalStroke
 
 @Composable
-fun MainLikeButton(
-    onItemClick : () -> Unit = { }
+fun MainFavoriteButton(
+    onItemClick: () -> Unit = {},
+    isFavoriteItemContain : Boolean
 ) {
+    val stroke = if(isFavoriteItemContain) {
+        NormalStroke
+    }else {
+        NormalDottedStroke
+    }
+    val title = if(isFavoriteItemContain) {
+        "즐겨찾기 캐릭터 확인"
+    }else {
+        "즐겨찾기 캐릭터 설정"
+    }
+    val iconId = if(isFavoriteItemContain) {
+        R.drawable.ic_star_24
+    }else {
+        R.drawable.ic_empty_star_24
+    }
     Row(
         modifier = Modifier
             .heightIn(min = MainTopButtonSize)
@@ -33,8 +50,9 @@ fun MainLikeButton(
             .clickable { onItemClick() }
             .drawBehind {
                 drawRoundRect(
-                    color = LikeColor,
-                    style = NormalDottedStroke)
+                    color = DarkYellow,
+                    style = stroke
+                )
             }
             .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.Center,
@@ -42,16 +60,26 @@ fun MainLikeButton(
     ) {
         Icon(
             modifier = Modifier.size(30.dp),
-            painter = painterResource(id = R.drawable.ic_like_24),
+            painter = painterResource(id = iconId),
             contentDescription = null,
-            tint = LikeColor
+            tint = DarkYellow
         )
-        Text(text = "대표 캐릭터 설정하기", fontSize = MainFontSize,color = LikeColor)
+        Text(text = title,fontSize = MainFontSize,color = DarkYellow)
     }
 }
 
 @Preview
 @Composable
-private fun MainLikeButtonPreview() {
-    MainLikeButton()
+private fun MainFavoriteEmptyPreview() {
+    MainFavoriteButton(
+        isFavoriteItemContain = false
+    )
+}
+
+@Preview
+@Composable
+private fun MainFavoriteContainPreview() {
+    MainFavoriteButton(
+        isFavoriteItemContain = true
+    )
 }
