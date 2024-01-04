@@ -10,6 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import com.hegunhee.maplemfinder.app.ui.theme.MapleMFinderTheme
 import com.hegunhee.maplemfinder.feature.main.MainNavGraph
 import com.hegunhee.maplemfinder.feature.main.mainNavGraph
+import com.hegunhee.maplemfinder.feature.search.navigateSearch
+import com.hegunhee.maplemfinder.feature.search.searchNavGraph
 
 @Composable
 fun MapleMFinderApp(
@@ -18,6 +20,7 @@ fun MapleMFinderApp(
     MapleMFinderTheme {
         NavHost(navController = rememberMapleMAppState.navController, startDestination = MainNavGraph.mainRoute) {
             mainNavGraph()
+            searchNavGraph()
         }
     }
 }
@@ -41,5 +44,9 @@ class MapleMAppState(
 
     fun popBackStack() {
         navController.popBackStack()
+    }
+
+    fun navigateSearch() {
+        navController.navigateSearch()
     }
 }
