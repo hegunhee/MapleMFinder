@@ -19,7 +19,10 @@ fun MapleMFinderApp(
 ) {
     MapleMFinderTheme {
         NavHost(navController = rememberMapleMAppState.navController, startDestination = MainNavGraph.mainRoute) {
-            mainNavGraph()
+            mainNavGraph(
+                onSearchClick = rememberMapleMAppState::navigateSearch
+            )
+
             searchNavGraph()
         }
     }
