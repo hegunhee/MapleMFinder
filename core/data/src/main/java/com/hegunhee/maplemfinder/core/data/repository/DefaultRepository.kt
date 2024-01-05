@@ -1,7 +1,7 @@
 package com.hegunhee.maplemfinder.core.data.repository
 
 import com.hegunhee.maplefinder.core.model.mapleM.Character
-import com.hegunhee.maplefinder.core.model.mapleM.worldList
+import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
 import com.hegunhee.maplemfinder.core.data.dataSource.local.MapleMLocalDataSource
 import com.hegunhee.maplemfinder.core.data.dataSource.remote.MapleMRemoteDataSource
 import com.hegunhee.maplemfinder.core.data.mapper.toCharacterDate
@@ -36,7 +36,13 @@ class DefaultRepository @Inject constructor(
         }
     }
 
-    override fun getWorldNameList(): List<String> = worldList
+    override fun getWorldList(): List<MapleMWorld> {
+        return mapleMLocalDataSource.getWorldList()
+    }
+
+    override fun getWorldIcon(name: String): Int {
+        return mapleMLocalDataSource.getWorldIcon(name = name)
+    }
 
     override suspend fun getMainCharacter(): Result<Character> {
         val ocid = mapleMLocalDataSource.getMainOcid()
