@@ -8,7 +8,7 @@ interface MapleMLocalDataSource {
 
     fun isFavoriteListEmpty() : Boolean
 
-    fun getServerList() : List<MapleMWorld>
+    fun getWorldList() : List<MapleMWorld>
 
-    fun getServerIcon(name : String) : Int
+    fun getWorldIcon(name : String) : Int
 }
