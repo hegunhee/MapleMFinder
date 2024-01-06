@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,8 +31,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
 import com.hegunhee.maplemfinder.core.ui.button.WorldSelectButton
 import com.hegunhee.maplemfinder.core.ui.button.defaultWorld
+import com.hegunhee.maplemfinder.core.ui.dialog.WorldSelectDialog
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreenRoot(
     viewModel : SearchViewModel = hiltViewModel()
@@ -43,13 +42,19 @@ fun SearchScreenRoot(
     var selectedWorld by remember { mutableStateOf(defaultWorld) }
     val setWorld : (MapleMWorld) -> Unit = { world -> selectedWorld = world }
 
+    var isWorldDialogOpen by remember { mutableStateOf(false) }
+    val openWorldDialog : (Boolean) -> Unit = { dialogState ->
+        isWorldDialogOpen = dialogState
+    }
+
     SearchScreen(
         worldList = worldList,
         name = searchQuery, 
         selectedWorld = selectedWorld, 
         setName = viewModel::setSearchQuery, 
         setWorld = setWorld,
-        onSelectedWorldButtonClick = { },
+        isWorldDialogOpen = isWorldDialogOpen,
+        onSelectedWorldButtonClick = openWorldDialog,
         onSearchClick = {name, world -> }
     )
 }
@@ -60,15 +65,19 @@ private fun SearchScreen(
     worldList : List<MapleMWorld>,
     name : String,
     selectedWorld : MapleMWorld,
+    isWorldDialogOpen : Boolean,
     setName : (String) -> Unit,
     setWorld : (MapleMWorld) -> Unit,
-    onSelectedWorldButtonClick : () -> Unit,
+    onSelectedWorldButtonClick : (Boolean) -> Unit,
     onSearchClick : (String, MapleMWorld) -> Unit,
-    keyboardController : SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
     context : Context = LocalContext.current
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    if(isWorldDialogOpen) {
+        WorldSelectDialog(worldList = worldList, onDismissDialog = { onSelectedWorldButtonClick(false)}, onWorldItemClick = setWorld)
+    }
     Column(modifier = Modifier.padding(10.dp)) {
-        WorldSelectButton(onButtonClick = onSelectedWorldButtonClick, selectedWorld = selectedWorld)
+        WorldSelectButton(onButtonClick = { onSelectedWorldButtonClick(true) }, selectedWorld = selectedWorld)
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = name,
@@ -81,19 +90,18 @@ private fun SearchScreen(
             },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = {
+                keyboardController?.hide()
                 if(selectedWorld == defaultWorld) {
                     Toast.makeText(context,"월드를 선택해주세요",Toast.LENGTH_SHORT).show()
-                    onSelectedWorldButtonClick()
+                    onSelectedWorldButtonClick(true)
                 } else{
                     onSearchClick(name,selectedWorld)
                 }
-                keyboardController?.hide()
             }),
         )
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Preview
 @Composable
 private fun SearchScreenPreview() {
@@ -102,9 +110,10 @@ private fun SearchScreenPreview() {
         worldList = listOf(),
         name = "",
         selectedWorld = defaultWorld,
+        isWorldDialogOpen = false,
         setName = { },
         setWorld = { },
-        onSelectedWorldButtonClick = { },
+        onSelectedWorldButtonClick = {  },
         onSearchClick = { name, world -> }
     )
 }
