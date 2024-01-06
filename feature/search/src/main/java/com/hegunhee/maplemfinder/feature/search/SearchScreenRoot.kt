@@ -14,6 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.hegunhee.maplefinder.core.model.mapleM.Character
+import com.hegunhee.maplefinder.core.model.mapleM.CharacterSearch
 import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
 import com.hegunhee.maplemfinder.core.ui.button.WorldSelectButton
 import com.hegunhee.maplemfinder.core.ui.button.defaultWorld
@@ -37,6 +40,8 @@ import com.hegunhee.maplemfinder.core.ui.dialog.WorldSelectDialog
 fun SearchScreenRoot(
     viewModel : SearchViewModel = hiltViewModel()
 ) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+
     val worldList = viewModel.worldList.collectAsStateWithLifecycle().value
     val searchQuery = viewModel.searchQuery.collectAsStateWithLifecycle().value
     var selectedWorld by remember { mutableStateOf(defaultWorld) }
@@ -47,16 +52,25 @@ fun SearchScreenRoot(
         isWorldDialogOpen = dialogState
     }
 
-    SearchScreen(
-        worldList = worldList,
-        name = searchQuery, 
-        selectedWorld = selectedWorld, 
-        setName = viewModel::setSearchQuery, 
-        setWorld = setWorld,
-        isWorldDialogOpen = isWorldDialogOpen,
-        onSelectedWorldButtonClick = openWorldDialog,
-        onSearchClick = {name, world -> }
-    )
+    when(uiState) {
+        SearchUiState.Loading -> { }
+        is SearchUiState.Success -> {
+            SearchScreen(
+                worldList = worldList,
+                name = searchQuery,
+                selectedWorld = selectedWorld,
+                searchState = uiState.searchState,
+                setName = viewModel::setSearchQuery,
+                setWorld = setWorld,
+                isWorldDialogOpen = isWorldDialogOpen,
+                onSelectedWorldButtonClick = openWorldDialog,
+                onSearchClick = viewModel::searchCharacter
+            )
+        }
+        is SearchUiState.Error -> {
+
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -66,6 +80,7 @@ private fun SearchScreen(
     name : String,
     selectedWorld : MapleMWorld,
     isWorldDialogOpen : Boolean,
+    searchState: SearchState,
     setName : (String) -> Unit,
     setWorld : (MapleMWorld) -> Unit,
     onSelectedWorldButtonClick : (Boolean) -> Unit,
@@ -99,7 +114,27 @@ private fun SearchScreen(
                 }
             }),
         )
+        when(searchState) {
+            is SearchState.History -> {
+
+            }
+            is SearchState.Success-> {
+
+            }
+            SearchState.Failure -> {
+
+            }
+        }
     }
+}
+
+sealed interface SearchState {
+
+    data class History(val searchList : List<CharacterSearch>) : SearchState
+
+    data class Success (val character : Character) : SearchState
+
+    object Failure : SearchState
 }
 
 @Preview
@@ -111,6 +146,7 @@ private fun SearchScreenPreview() {
         name = "",
         selectedWorld = defaultWorld,
         isWorldDialogOpen = false,
+        searchState = SearchState.Success(Character.EMPTY),
         setName = { },
         setWorld = { },
         onSelectedWorldButtonClick = {  },
