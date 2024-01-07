@@ -7,7 +7,9 @@ data class Character(
     val info : CharacterInfo,
     val date : CharacterDate,
     val statusList : List<CharacterStatus>,
-    val equippedItemList : List<Item>
+    val equippedItemList : List<Item>,
+    val isMain : Boolean,
+    val isFavorite : Boolean
 ) {
     companion object {
         val EMPTY : Character= Character(
@@ -17,7 +19,9 @@ data class Character(
             info = CharacterInfo("","",0L,0),
             date = CharacterDate("","",""),
             statusList = emptyList(),
-            equippedItemList = emptyList()
+            equippedItemList = emptyList(),
+            isMain = false,
+            isFavorite = false
         )
     }
 }

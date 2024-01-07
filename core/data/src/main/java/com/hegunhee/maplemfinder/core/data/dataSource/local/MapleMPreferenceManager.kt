@@ -21,6 +21,14 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
         return prefs.getString(mainCharacterKey, emptyOcid) ?: emptyOcid
     }
 
+    fun isMainOcid(ocid : String) : Boolean {
+        return if(ocid.isBlank()) {
+            false
+        }else {
+            ocid == getMainOcid()
+        }
+    }
+
     fun setMainOcid(ocid : String) {
         prefs.edit {
             putString(mainCharacterKey,ocid)
@@ -34,6 +42,15 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
             emptyList()
         } else {
             prefsJson.fromJson()
+        }
+    }
+
+    fun isFavoriteOcid(ocid : String) :Boolean {
+        val ocidList = getFavoriteOcidList()
+        return if(ocidList.isEmpty()) {
+            false
+        }else {
+            ocidList.contains(ocid)
         }
     }
 
