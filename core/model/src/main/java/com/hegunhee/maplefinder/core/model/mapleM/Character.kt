@@ -3,7 +3,7 @@ package com.hegunhee.maplefinder.core.model.mapleM
 data class Character(
     val ocid : String,
     val name : String,
-    val worldName : String,
+    val world : MapleMWorld,
     val info : CharacterInfo,
     val date : CharacterDate,
     val statusList : List<CharacterStatus>,
@@ -13,7 +13,7 @@ data class Character(
         val EMPTY : Character= Character(
             ocid = "",
             name = "",
-            worldName = "",
+            world = MapleMWorld("",0),
             info = CharacterInfo("","",0L,0),
             date = CharacterDate("","",""),
             statusList = emptyList(),
