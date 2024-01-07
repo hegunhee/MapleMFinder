@@ -8,6 +8,7 @@ import com.hegunhee.maplemfinder.core.data.mapper.toCharacterDate
 import com.hegunhee.maplemfinder.core.data.mapper.toCharacterInfo
 import com.hegunhee.maplemfinder.core.data.mapper.toItemList
 import com.hegunhee.maplemfinder.core.data.mapper.toStatusList
+import com.hegunhee.maplemfinder.core.data.mapper.worldNameToWorld
 import com.hegunhee.maplemfinder.core.domain.repository.Repository
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class DefaultRepository @Inject constructor(
             Character(
                 ocid = ocid,
                 name = infoResponse.characterName,
-                worldName = infoResponse.worldName,
+                world = worldNameToWorld(infoResponse.worldName),
                 date = characterDate,
                 equippedItemList = characterItem,
                 info = characterInfo,
@@ -58,7 +59,7 @@ class DefaultRepository @Inject constructor(
                 Character(
                     ocid = ocid,
                     name = infoResponse.characterName,
-                    worldName = infoResponse.worldName,
+                    world = worldNameToWorld(infoResponse.worldName),
                     date = characterDate,
                     equippedItemList = characterItem,
                     info = characterInfo,
