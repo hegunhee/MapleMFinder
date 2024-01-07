@@ -25,6 +25,8 @@ class DefaultRepository @Inject constructor(
             val characterDate = infoResponse.toCharacterDate()
             val characterItem = mapleMRemoteDataSource.getCharacterItem(ocid).toItemList()
             val characterStatus = mapleMRemoteDataSource.getCharacterStatus(ocid).toStatusList()
+            val isMain = mapleMLocalDataSource.isMainOcid(ocid)
+            val isFavorite = mapleMLocalDataSource.isFavoriteOcid(ocid)
             Character(
                 ocid = ocid,
                 name = infoResponse.characterName,
@@ -32,7 +34,9 @@ class DefaultRepository @Inject constructor(
                 date = characterDate,
                 equippedItemList = characterItem,
                 info = characterInfo,
-                statusList = characterStatus
+                statusList = characterStatus,
+                isMain = isMain,
+                isFavorite = isFavorite
             )
         }
     }
@@ -52,19 +56,7 @@ class DefaultRepository @Inject constructor(
         }else {
             runCatching {
                 val infoResponse = mapleMRemoteDataSource.getCharacterInfo(ocid = ocid)
-                val characterInfo = infoResponse.toCharacterInfo()
-                val characterDate = infoResponse.toCharacterDate()
-                val characterItem = mapleMRemoteDataSource.getCharacterItem(ocid).toItemList()
-                val characterStatus = mapleMRemoteDataSource.getCharacterStatus(ocid).toStatusList()
-                Character(
-                    ocid = ocid,
-                    name = infoResponse.characterName,
-                    world = worldNameToWorld(infoResponse.worldName),
-                    date = characterDate,
-                    equippedItemList = characterItem,
-                    info = characterInfo,
-                    statusList = characterStatus
-                )
+                getCharacterTotalInfo(infoResponse.characterName,infoResponse.worldName).getOrThrow()
             }
         }
     }
