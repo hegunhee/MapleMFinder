@@ -45,6 +45,10 @@ class DefaultRepository @Inject constructor(
         return mapleMLocalDataSource.getWorldList()
     }
 
+    override fun setMainOcid(ocid: String) {
+        mapleMLocalDataSource.setMainOcid(ocid)
+    }
+
     override fun getWorldIcon(name: String): Int {
         return mapleMLocalDataSource.getWorldIcon(name = name)
     }
@@ -59,6 +63,10 @@ class DefaultRepository @Inject constructor(
                 getCharacterTotalInfo(infoResponse.characterName,infoResponse.worldName).getOrThrow()
             }
         }
+    }
+
+    override fun toggleFavoriteOcid(ocid: String) {
+        mapleMLocalDataSource.toggleFavoriteOcid(ocid)
     }
 
     override fun isFavoriteListEmpty(): Result<Boolean> {

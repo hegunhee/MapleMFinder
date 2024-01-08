@@ -9,9 +9,13 @@ interface Repository {
 
     fun getWorldList() : List<MapleMWorld>
 
+    fun setMainOcid(ocid : String)
+
     fun getWorldIcon(name : String) : Int
 
     suspend fun getMainCharacter() : Result<Character>
+
+    fun toggleFavoriteOcid(ocid : String)
 
     fun isFavoriteListEmpty() : Result<Boolean>
 }

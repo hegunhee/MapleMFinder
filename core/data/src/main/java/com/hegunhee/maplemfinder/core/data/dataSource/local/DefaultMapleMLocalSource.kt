@@ -13,6 +13,10 @@ class DefaultMapleMLocalSource @Inject constructor(
         return mapleMPreferenceManager.getMainOcid()
     }
 
+    override fun setMainOcid(ocid: String) {
+        mapleMPreferenceManager.setMainOcid(ocid)
+    }
+
     override fun isMainOcid(ocid: String): Boolean {
         return mapleMPreferenceManager.isMainOcid(ocid)
     }
@@ -27,6 +31,10 @@ class DefaultMapleMLocalSource @Inject constructor(
 
     override fun isFavoriteOcid(ocid: String): Boolean {
         return mapleMPreferenceManager.isFavoriteOcid(ocid)
+    }
+
+    override fun toggleFavoriteOcid(ocid: String) {
+        mapleMPreferenceManager.toggleFavoriteOcid(ocid)
     }
 
     override fun getWorldIcon(name: String): Int {
