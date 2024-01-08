@@ -39,8 +39,8 @@ import com.hegunhee.maplemfinder.core.designsystem.theme.Sky
 fun CharacterCard(
     character : Character,
     onCardClick : (String) -> Unit,
-    onLikeClick : (String,String,MapleMWorld) -> Unit,
-    onFavoriteClick : (String,String,MapleMWorld) -> Unit
+    onLikeClick : (String) -> Unit,
+    onFavoriteClick : (String) -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -78,8 +78,8 @@ private fun CharacterCardHeader(
     level : Int,
     isMain : Boolean = false,
     isFavorite : Boolean = false,
-    onLikeClick : (String,String,MapleMWorld) -> Unit,
-    onFavoriteClick : (String,String,MapleMWorld) -> Unit
+    onLikeClick : (String) -> Unit,
+    onFavoriteClick : (String) -> Unit
 ) {
     Row(modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -96,7 +96,7 @@ private fun CharacterCardHeader(
             .clip(shape = RoundedCornerShape(20))
             .background(color = DeepSkyBlue)) {
             IconButton(
-                onClick = { onLikeClick(ocid,name,world) }) {
+                onClick = { onLikeClick(ocid) }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_like_24),
                     contentDescription = world.name,
@@ -111,7 +111,7 @@ private fun CharacterCardHeader(
                 .width(5.dp)
                 .height(48.dp)
                 .background(Color.White))
-            IconButton(onClick = { onFavoriteClick(ocid,name,world) }) {
+            IconButton(onClick = { onFavoriteClick(ocid) }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_star_24),
                     contentDescription = world.name,
@@ -174,8 +174,8 @@ private fun CharacterCardPreview() {
     CharacterCard(
         character = Character.EMPTY,
         onCardClick = { },
-        onLikeClick = {ocid,name,world -> },
-        onFavoriteClick = {ocid,name,world -> }
+        onLikeClick = { },
+        onFavoriteClick = { }
     )
 }
 

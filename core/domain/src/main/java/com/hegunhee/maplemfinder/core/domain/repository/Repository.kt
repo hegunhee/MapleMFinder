@@ -7,6 +7,8 @@ interface Repository {
 
     suspend fun getCharacterTotalInfo(name : String, worldName : String) : Result<Character>
 
+    suspend fun getCharacterTotalInfo(ocid : String) : Result<Character>
+
     fun getWorldList() : List<MapleMWorld>
 
     fun setMainOcid(ocid : String)
