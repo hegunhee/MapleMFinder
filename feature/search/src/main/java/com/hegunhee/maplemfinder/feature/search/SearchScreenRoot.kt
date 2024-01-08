@@ -88,8 +88,8 @@ private fun SearchScreen(
     setWorld : (MapleMWorld) -> Unit,
     onSelectedWorldButtonClick : (Boolean) -> Unit,
     onSearchClick : (String, MapleMWorld) -> Unit,
-    onLikeButtonClick : (String,String,MapleMWorld) -> Unit,
-    onFavoriteButtonClick : (String,String,MapleMWorld) -> Unit,
+    onLikeButtonClick : (String) -> Unit,
+    onFavoriteButtonClick : (String) -> Unit,
     context : Context = LocalContext.current
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -157,7 +157,7 @@ private fun SearchScreenPreview() {
         setWorld = { },
         onSelectedWorldButtonClick = {  },
         onSearchClick = { name, world -> },
-        onLikeButtonClick = { ocid,name,world -> },
-        onFavoriteButtonClick = {ocid,name,world ->}
+        onLikeButtonClick = {  },
+        onFavoriteButtonClick = { }
     )
 }

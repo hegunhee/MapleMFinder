@@ -20,6 +20,12 @@ class DefaultRepository @Inject constructor(
     override suspend fun getCharacterTotalInfo(name: String, worldName: String): Result<Character> {
         return runCatching {
             val ocid = mapleMRemoteDataSource.getCharacterOcid(name,worldName).id
+            getCharacterTotalInfo(ocid).getOrThrow()
+        }
+    }
+
+    override suspend fun getCharacterTotalInfo(ocid : String) : Result<Character> {
+        return runCatching {
             val infoResponse = mapleMRemoteDataSource.getCharacterInfo(ocid = ocid)
             val characterInfo = infoResponse.toCharacterInfo()
             val characterDate = infoResponse.toCharacterDate()
@@ -58,10 +64,7 @@ class DefaultRepository @Inject constructor(
         return if(ocid == "") {
             runCatching { Character.EMPTY }
         }else {
-            runCatching {
-                val infoResponse = mapleMRemoteDataSource.getCharacterInfo(ocid = ocid)
-                getCharacterTotalInfo(infoResponse.characterName,infoResponse.worldName).getOrThrow()
-            }
+            getCharacterTotalInfo(ocid)
         }
     }
 

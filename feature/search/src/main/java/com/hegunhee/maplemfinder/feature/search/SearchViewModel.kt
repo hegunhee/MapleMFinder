@@ -3,6 +3,7 @@ package com.hegunhee.maplemfinder.feature.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplemfinder.core.domain.usecase.GetCharacterByOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.SetToggleFavoriteOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetCharacterUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetWorldListUseCase
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val getWorldListUseCase: GetWorldListUseCase,
     private val getCharacterUseCase : GetCharacterUseCase,
+    private val getCharacterByOcidUseCase: GetCharacterByOcidUseCase,
     private val setMainOcidUseCase: SetMainOcidUseCase,
     private val setToggleFavoriteOcidUseCase: SetToggleFavoriteOcidUseCase
 ) : ViewModel() {
@@ -54,10 +56,10 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onCharacterLikeClick(ocid : String,name : String,world : MapleMWorld) {
+    fun onCharacterLikeClick(ocid : String) {
         viewModelScope.launch {
             setMainOcidUseCase(ocid)
-            getCharacterUseCase(name = name, worldName = world.name)
+            getCharacterByOcidUseCase(ocid = ocid)
                 .onSuccess {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Success(it))
                 }.onFailure {
@@ -66,10 +68,10 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onCharacterFavoriteClick(ocid : String,name : String,world : MapleMWorld) {
+    fun onCharacterFavoriteClick(ocid : String) {
         viewModelScope.launch {
             setToggleFavoriteOcidUseCase(ocid)
-            getCharacterUseCase(name = name, worldName = world.name)
+            getCharacterByOcidUseCase(ocid = ocid)
                 .onSuccess {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Success(it))
                 }.onFailure {
