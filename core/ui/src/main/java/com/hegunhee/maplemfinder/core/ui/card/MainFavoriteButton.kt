@@ -26,22 +26,22 @@ import com.hegunhee.maplemfinder.core.designsystem.theme.NormalStroke
 @Composable
 fun MainFavoriteButton(
     onItemClick: () -> Unit = {},
-    isFavoriteItemContain : Boolean
+    isFavoriteItemEmpty : Boolean
 ) {
-    val stroke = if(isFavoriteItemContain) {
-        NormalStroke
-    }else {
+    val stroke = if(isFavoriteItemEmpty) {
         NormalDottedStroke
-    }
-    val title = if(isFavoriteItemContain) {
-        "즐겨찾기 캐릭터 확인"
     }else {
+        NormalStroke
+    }
+    val title = if(isFavoriteItemEmpty) {
         "즐겨찾기 캐릭터 설정"
-    }
-    val iconId = if(isFavoriteItemContain) {
-        R.drawable.ic_star_24
     }else {
+        "즐겨찾기 캐릭터 확인"
+    }
+    val iconId = if(isFavoriteItemEmpty) {
         R.drawable.ic_empty_star_24
+    }else {
+        R.drawable.ic_star_24
     }
     Row(
         modifier = Modifier
@@ -72,7 +72,7 @@ fun MainFavoriteButton(
 @Composable
 private fun MainFavoriteEmptyPreview() {
     MainFavoriteButton(
-        isFavoriteItemContain = false
+        isFavoriteItemEmpty = true
     )
 }
 
@@ -80,6 +80,6 @@ private fun MainFavoriteEmptyPreview() {
 @Composable
 private fun MainFavoriteContainPreview() {
     MainFavoriteButton(
-        isFavoriteItemContain = true
+        isFavoriteItemEmpty = false
     )
 }

@@ -59,7 +59,7 @@ private fun MainScreen(
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
         MainFavoriteButton(
             onItemClick = onSearchClick,
-            isFavoriteItemContain = isFavoriteListEmpty
+            isFavoriteItemEmpty = isFavoriteListEmpty
         )
     }
 }
