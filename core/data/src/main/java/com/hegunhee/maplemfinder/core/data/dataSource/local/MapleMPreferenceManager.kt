@@ -1,6 +1,7 @@
 package com.hegunhee.maplemfinder.core.data.dataSource.local
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -30,14 +31,19 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
     }
 
     fun setMainOcid(ocid : String) {
+        if(ocid == emptyOcid) return
         prefs.edit {
-            putString(mainCharacterKey,ocid)
+            if(ocid == getMainOcid()) {
+                putString(mainCharacterKey, emptyOcid)
+            }else{
+                putString(mainCharacterKey, ocid)
+            }
             apply()
         }
     }
 
     fun getFavoriteOcidList() : List<String> {
-        val prefsJson = prefs.getString(likeCharacterKey, emptyOcid)
+        val prefsJson = prefs.getString(favoriteCharacterKey, emptyOcid)
         return if(prefsJson.isNullOrBlank()) {
             emptyList()
         } else {
@@ -58,30 +64,25 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
         return getFavoriteOcidList().isEmpty()
     }
 
-    fun addFavoriteOcid(ocid : String) {
+    fun toggleFavoriteOcid(ocid: String) {
         val ocidList = getFavoriteOcidList()
-        if(ocidList.contains(ocid)) {
-            return
-        }
+        if (ocid == emptyOcid) return
         prefs.edit {
-            (ocidList + ocid).let { addedList ->
-                putString(likeCharacterKey,addedList.toJson())
-                apply()
+            if (ocidList.contains(ocid)) {
+                deleteFavoriteOcid(ocid, ocidList)
+            } else {
+                addFavoriteOcid(ocid, ocidList)
             }
+            apply()
         }
     }
 
-    fun deleteFavoriteOcid(ocid : String) {
-        val ocidList = getFavoriteOcidList()
-        if(!ocidList.contains(ocid)) {
-            return
-        }
-        prefs.edit {
-            ocidList.filter { it != ocid }.let { changedList ->
-                putString(likeCharacterKey, changedList.toJson())
-                apply()
-            }
-        }
+    private fun SharedPreferences.Editor.addFavoriteOcid(ocid : String, ocidList : List<String>) {
+        putString(favoriteCharacterKey, (ocidList + ocid).toJson())
+    }
+
+    private fun SharedPreferences.Editor.deleteFavoriteOcid(ocid : String, ocidList : List<String>) {
+        putString(favoriteCharacterKey, ocidList.filter { it != ocid }.toJson())
     }
 
     private fun List<String>.toJson() : String {
@@ -95,7 +96,7 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
     companion object {
         private const val MapleMKey = "MapleMSharedPrefence"
         private const val mainCharacterKey = "MainCharacter"
-        private const val likeCharacterKey = "LikeCharacter"
+        private const val favoriteCharacterKey = "FavoriteCharacter"
 
         private const val emptyOcid = ""
     }
