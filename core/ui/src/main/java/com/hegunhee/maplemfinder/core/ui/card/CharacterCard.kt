@@ -39,8 +39,8 @@ import com.hegunhee.maplemfinder.core.designsystem.theme.Sky
 fun CharacterCard(
     character : Character,
     onCardClick : (String) -> Unit,
-    onLikeClick : (Boolean) -> Unit,
-    onFavoriteClick : (Boolean) -> Unit
+    onLikeClick : (String,String,MapleMWorld) -> Unit,
+    onFavoriteClick : (String,String,MapleMWorld) -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -51,6 +51,7 @@ fun CharacterCard(
     ) {
         Column {
             CharacterCardHeader(
+                ocid = character.ocid,
                 world = character.world,
                 name = character.name,
                 level = character.info.level,
@@ -71,13 +72,14 @@ fun CharacterCard(
 
 @Composable
 private fun CharacterCardHeader(
+    ocid : String,
     world : MapleMWorld,
     name : String,
     level : Int,
     isMain : Boolean = false,
     isFavorite : Boolean = false,
-    onLikeClick: (Boolean) -> Unit,
-    onFavoriteClick: (Boolean) -> Unit
+    onLikeClick : (String,String,MapleMWorld) -> Unit,
+    onFavoriteClick : (String,String,MapleMWorld) -> Unit
 ) {
     Row(modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -94,7 +96,7 @@ private fun CharacterCardHeader(
             .clip(shape = RoundedCornerShape(20))
             .background(color = DeepSkyBlue)) {
             IconButton(
-                onClick = { onLikeClick(isMain) }) {
+                onClick = { onLikeClick(ocid,name,world) }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_like_24),
                     contentDescription = world.name,
@@ -109,7 +111,7 @@ private fun CharacterCardHeader(
                 .width(5.dp)
                 .height(48.dp)
                 .background(Color.White))
-            IconButton(onClick = { onFavoriteClick(isFavorite) }) {
+            IconButton(onClick = { onFavoriteClick(ocid,name,world) }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_star_24),
                     contentDescription = world.name,
@@ -172,8 +174,8 @@ private fun CharacterCardPreview() {
     CharacterCard(
         character = Character.EMPTY,
         onCardClick = { },
-        onLikeClick = { },
-        onFavoriteClick = { }
+        onLikeClick = {ocid,name,world -> },
+        onFavoriteClick = {ocid,name,world -> }
     )
 }
 
