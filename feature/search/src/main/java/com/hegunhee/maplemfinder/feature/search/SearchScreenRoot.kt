@@ -3,6 +3,7 @@ package com.hegunhee.maplemfinder.feature.search
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
@@ -14,7 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +34,7 @@ import com.hegunhee.maplefinder.core.model.mapleM.CharacterSearch
 import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
 import com.hegunhee.maplemfinder.core.ui.button.WorldSelectButton
 import com.hegunhee.maplemfinder.core.ui.button.defaultWorld
+import com.hegunhee.maplemfinder.core.ui.card.CharacterCard
 import com.hegunhee.maplemfinder.core.ui.dialog.WorldSelectDialog
 
 @Composable
@@ -64,7 +65,9 @@ fun SearchScreenRoot(
                 setWorld = setWorld,
                 isWorldDialogOpen = isWorldDialogOpen,
                 onSelectedWorldButtonClick = openWorldDialog,
-                onSearchClick = viewModel::searchCharacter
+                onSearchClick = viewModel::searchCharacter,
+                onLikeButtonClick = viewModel::onCharacterLikeClick,
+                onFavoriteButtonClick = viewModel::onCharacterFavoriteClick
             )
         }
         is SearchUiState.Error -> {
@@ -85,6 +88,8 @@ private fun SearchScreen(
     setWorld : (MapleMWorld) -> Unit,
     onSelectedWorldButtonClick : (Boolean) -> Unit,
     onSearchClick : (String, MapleMWorld) -> Unit,
+    onLikeButtonClick : (String,String,MapleMWorld) -> Unit,
+    onFavoriteButtonClick : (String,String,MapleMWorld) -> Unit,
     context : Context = LocalContext.current
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -114,12 +119,13 @@ private fun SearchScreen(
                 }
             }),
         )
+        Spacer(modifier = Modifier.padding(vertical = 10.dp))
         when(searchState) {
             is SearchState.History -> {
 
             }
             is SearchState.Success-> {
-
+                CharacterCard(character = searchState.character, onCardClick = { }, onLikeClick = onLikeButtonClick, onFavoriteClick = onFavoriteButtonClick)
             }
             SearchState.Failure -> {
 
@@ -150,6 +156,8 @@ private fun SearchScreenPreview() {
         setName = { },
         setWorld = { },
         onSelectedWorldButtonClick = {  },
-        onSearchClick = { name, world -> }
+        onSearchClick = { name, world -> },
+        onLikeButtonClick = { ocid,name,world -> },
+        onFavoriteButtonClick = {ocid,name,world ->}
     )
 }
