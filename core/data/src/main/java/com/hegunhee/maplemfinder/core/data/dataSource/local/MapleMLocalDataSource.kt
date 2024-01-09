@@ -18,5 +18,11 @@ interface MapleMLocalDataSource {
 
     fun toggleFavoriteOcid(ocid : String)
 
+    fun getHistoryOcidList() : List<String>
+
+    fun addHistoryOcid(ocid : String)
+
+    fun deleteHistoryOcid(ocid : String)
+
     fun getWorldIcon(name : String) : Int
 }
