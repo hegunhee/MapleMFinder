@@ -37,6 +37,7 @@ import com.hegunhee.maplemfinder.core.ui.button.defaultWorld
 import com.hegunhee.maplemfinder.core.ui.card.CharacterCard
 import com.hegunhee.maplemfinder.core.ui.card.SearchFailureCard
 import com.hegunhee.maplemfinder.core.ui.dialog.WorldSelectDialog
+import com.hegunhee.maplemfinder.core.ui.screen.HistoryScreen
 
 @Composable
 fun SearchScreenRoot(
@@ -64,11 +65,13 @@ fun SearchScreenRoot(
                 searchState = uiState.searchState,
                 setName = viewModel::setSearchQuery,
                 setWorld = setWorld,
+                onItemClick = { },
                 isWorldDialogOpen = isWorldDialogOpen,
                 onSelectedWorldButtonClick = openWorldDialog,
                 onSearchClick = viewModel::searchCharacter,
                 onLikeButtonClick = viewModel::onCharacterLikeClick,
-                onFavoriteButtonClick = viewModel::onCharacterFavoriteClick
+                onFavoriteButtonClick = viewModel::onCharacterFavoriteClick,
+                onHistoryDeleteButtonClick = viewModel::onHistoryCharacterDeleteClick
             )
         }
         is SearchUiState.Error -> {
@@ -87,10 +90,12 @@ private fun SearchScreen(
     searchState: SearchState,
     setName : (String) -> Unit,
     setWorld : (MapleMWorld) -> Unit,
+    onItemClick : (String) -> Unit,
     onSelectedWorldButtonClick : (Boolean) -> Unit,
     onSearchClick : (String, MapleMWorld) -> Unit,
     onLikeButtonClick : (String) -> Unit,
     onFavoriteButtonClick : (String) -> Unit,
+    onHistoryDeleteButtonClick : (String) -> Unit,
     context : Context = LocalContext.current
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -123,10 +128,10 @@ private fun SearchScreen(
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
         when(searchState) {
             is SearchState.History -> {
-
+                HistoryScreen(historyList = searchState.searchList, onItemClick = onItemClick, onHistoryDeleteClick = onHistoryDeleteButtonClick)
             }
             is SearchState.Success-> {
-                CharacterCard(character = searchState.character, onCardClick = { }, onLikeClick = onLikeButtonClick, onFavoriteClick = onFavoriteButtonClick)
+                CharacterCard(character = searchState.character, onCardClick = onItemClick, onLikeClick = onLikeButtonClick, onFavoriteClick = onFavoriteButtonClick)
             }
             SearchState.Failure -> {
                 SearchFailureCard()
@@ -156,9 +161,11 @@ private fun SearchScreenPreview() {
         searchState = SearchState.Success(Character.EMPTY),
         setName = { },
         setWorld = { },
+        onItemClick = { },
         onSelectedWorldButtonClick = {  },
         onSearchClick = { name, world -> },
         onLikeButtonClick = {  },
-        onFavoriteButtonClick = { }
+        onFavoriteButtonClick = { },
+        onHistoryDeleteButtonClick = { }
     )
 }

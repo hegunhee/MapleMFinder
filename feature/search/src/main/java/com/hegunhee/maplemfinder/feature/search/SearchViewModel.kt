@@ -3,9 +3,11 @@ package com.hegunhee.maplemfinder.feature.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
-import com.hegunhee.maplemfinder.core.domain.usecase.GetCharacterByOcidUseCase
+import com.hegunhee.maplemfinder.core.domain.usecase.AddHistoryOcidUseCase
+import com.hegunhee.maplemfinder.core.domain.usecase.DeleteHistoryOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.SetToggleFavoriteOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetCharacterUseCase
+import com.hegunhee.maplemfinder.core.domain.usecase.GetHistoryCharacterListUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetWorldListUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.SetMainOcidUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,9 +21,11 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val getWorldListUseCase: GetWorldListUseCase,
     private val getCharacterUseCase : GetCharacterUseCase,
-    private val getCharacterByOcidUseCase: GetCharacterByOcidUseCase,
     private val setMainOcidUseCase: SetMainOcidUseCase,
-    private val setToggleFavoriteOcidUseCase: SetToggleFavoriteOcidUseCase
+    private val setToggleFavoriteOcidUseCase: SetToggleFavoriteOcidUseCase,
+    private val getHistoryCharacterListUseCase: GetHistoryCharacterListUseCase,
+    private val addHistoryOcidUseCase : AddHistoryOcidUseCase,
+    private val deleteHistoryOcidUseCase: DeleteHistoryOcidUseCase
 ) : ViewModel() {
 
     private val _worldList : MutableStateFlow<List<MapleMWorld>> = MutableStateFlow(getWorldListUseCase())
@@ -42,7 +46,14 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun fetchData() {
-        _uiState.value = SearchUiState.Success(searchState = SearchState.History(listOf()))
+        viewModelScope.launch {
+            getHistoryCharacterListUseCase()
+                .onSuccess {
+                    _uiState.value = SearchUiState.Success(searchState = SearchState.History(it))
+                }.onFailure {
+
+                }
+        }
     }
 
     fun searchCharacter(name : String,world :MapleMWorld) {
@@ -50,6 +61,7 @@ class SearchViewModel @Inject constructor(
             getCharacterUseCase(name = name, worldName = world.name)
                 .onSuccess {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Success(it))
+                    addHistoryOcidUseCase(it.ocid)
                 }.onFailure {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Failure)
                 }
@@ -59,7 +71,7 @@ class SearchViewModel @Inject constructor(
     fun onCharacterLikeClick(ocid : String) {
         viewModelScope.launch {
             setMainOcidUseCase(ocid)
-            getCharacterByOcidUseCase(ocid = ocid)
+            getCharacterUseCase(ocid = ocid)
                 .onSuccess {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Success(it))
                 }.onFailure {
@@ -71,11 +83,23 @@ class SearchViewModel @Inject constructor(
     fun onCharacterFavoriteClick(ocid : String) {
         viewModelScope.launch {
             setToggleFavoriteOcidUseCase(ocid)
-            getCharacterByOcidUseCase(ocid = ocid)
+            getCharacterUseCase(ocid = ocid)
                 .onSuccess {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Success(it))
                 }.onFailure {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Failure)
+                }
+        }
+    }
+
+    fun onHistoryCharacterDeleteClick(ocid : String) {
+        viewModelScope.launch {
+            deleteHistoryOcidUseCase(ocid)
+            getHistoryCharacterListUseCase()
+                .onSuccess {
+                    _uiState.value = SearchUiState.Success(searchState = SearchState.History(it))
+                }.onFailure {
+
                 }
         }
     }
