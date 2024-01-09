@@ -14,6 +14,8 @@ interface MapleMLocalDataSource {
 
     fun getWorldList() : List<MapleMWorld>
 
+    fun getFavoriteOcidList() : List<String>
+
     fun isFavoriteOcid(ocid : String) : Boolean
 
     fun toggleFavoriteOcid(ocid : String)

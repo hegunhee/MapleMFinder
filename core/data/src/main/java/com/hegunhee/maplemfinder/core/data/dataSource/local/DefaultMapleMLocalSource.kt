@@ -29,6 +29,10 @@ class DefaultMapleMLocalSource @Inject constructor(
         return worldList
     }
 
+    override fun getFavoriteOcidList(): List<String> {
+        return mapleMPreferenceManager.getFavoriteOcidList()
+    }
+
     override fun isFavoriteOcid(ocid: String): Boolean {
         return mapleMPreferenceManager.isFavoriteOcid(ocid)
     }
