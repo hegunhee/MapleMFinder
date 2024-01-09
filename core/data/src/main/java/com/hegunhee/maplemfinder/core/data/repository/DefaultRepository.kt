@@ -56,10 +56,6 @@ class DefaultRepository @Inject constructor(
         mapleMLocalDataSource.setMainOcid(ocid)
     }
 
-    override fun getWorldIcon(name: String): Int {
-        return mapleMLocalDataSource.getWorldIcon(name = name)
-    }
-
     override suspend fun getMainCharacter(): Result<Character> {
         val ocid = mapleMLocalDataSource.getMainOcid()
         return if(ocid == "") {

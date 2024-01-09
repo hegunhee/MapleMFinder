@@ -14,8 +14,6 @@ interface Repository {
 
     fun setMainOcid(ocid : String)
 
-    fun getWorldIcon(name : String) : Int
-
     suspend fun getMainCharacter() : Result<Character>
 
     fun toggleFavoriteOcid(ocid : String)

@@ -48,8 +48,4 @@ class DefaultMapleMLocalSource @Inject constructor(
     override fun deleteHistoryOcid(ocid: String) {
         mapleMPreferenceManager.deleteHistoryOcid(ocid)
     }
-
-    override fun getWorldIcon(name: String): Int {
-        return worldList.find { it.name == name }?.icon ?: R.drawable.ic_default_server_mark_24
-    }
 }

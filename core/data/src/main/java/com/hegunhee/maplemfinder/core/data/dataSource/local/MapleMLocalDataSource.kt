@@ -23,6 +23,4 @@ interface MapleMLocalDataSource {
     fun addHistoryOcid(ocid : String)
 
     fun deleteHistoryOcid(ocid : String)
-
-    fun getWorldIcon(name : String) : Int
 }
