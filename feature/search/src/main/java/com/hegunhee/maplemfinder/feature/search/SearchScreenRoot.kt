@@ -35,6 +35,7 @@ import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
 import com.hegunhee.maplemfinder.core.ui.button.WorldSelectButton
 import com.hegunhee.maplemfinder.core.ui.button.defaultWorld
 import com.hegunhee.maplemfinder.core.ui.card.CharacterCard
+import com.hegunhee.maplemfinder.core.ui.card.SearchFailureCard
 import com.hegunhee.maplemfinder.core.ui.dialog.WorldSelectDialog
 
 @Composable
@@ -128,7 +129,7 @@ private fun SearchScreen(
                 CharacterCard(character = searchState.character, onCardClick = { }, onLikeClick = onLikeButtonClick, onFavoriteClick = onFavoriteButtonClick)
             }
             SearchState.Failure -> {
-
+                SearchFailureCard()
             }
         }
     }
