@@ -1,6 +1,7 @@
 package com.hegunhee.maplemfinder.core.data.repository
 
 import com.hegunhee.maplefinder.core.model.mapleM.Character
+import com.hegunhee.maplefinder.core.model.mapleM.CharacterSearch
 import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
 import com.hegunhee.maplemfinder.core.data.dataSource.local.MapleMLocalDataSource
 import com.hegunhee.maplemfinder.core.data.dataSource.remote.MapleMRemoteDataSource
@@ -70,6 +71,27 @@ class DefaultRepository @Inject constructor(
 
     override fun toggleFavoriteOcid(ocid: String) {
         mapleMLocalDataSource.toggleFavoriteOcid(ocid)
+    }
+
+    override suspend fun getHistoryCharacterList(): Result<List<CharacterSearch>> {
+        val ocidList = mapleMLocalDataSource.getHistoryOcidList()
+        if(ocidList.isEmpty()) {
+            return Result.success(emptyList())
+        }
+        return runCatching {
+            ocidList.map { ocid ->
+                val info = mapleMRemoteDataSource.getCharacterInfo(ocid)
+                CharacterSearch(ocid,info.characterName, worldNameToWorld(info.worldName))
+            }
+        }
+    }
+
+    override fun addHistoryOcid(ocid: String) {
+        mapleMLocalDataSource.addHistoryOcid(ocid)
+    }
+
+    override fun deleteHistoryOcid(ocid: String) {
+        mapleMLocalDataSource.deleteHistoryOcid(ocid)
     }
 
     override fun isFavoriteListEmpty(): Result<Boolean> {

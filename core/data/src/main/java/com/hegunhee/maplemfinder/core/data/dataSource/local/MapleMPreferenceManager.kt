@@ -77,6 +77,35 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
         }
     }
 
+    fun getHistoryOcidList() : List<String> {
+        val prefsJson = prefs.getString(historyCharacterKey, emptyOcid)
+        return if(prefsJson.isNullOrBlank()) {
+            emptyList()
+        } else {
+            prefsJson.fromJson()
+        }
+    }
+
+    fun addHistoryOcid(ocid : String) {
+        val ocidList = getHistoryOcidList()
+        if(ocid == emptyOcid) return
+        prefs.edit {
+            if (ocidList.contains(ocid)) {
+                return
+            }else {
+                putString(historyCharacterKey,(ocidList + ocid).toJson())
+            }
+        }
+    }
+
+    fun deleteHistoryOcid(ocid : String) {
+        val ocidList = getHistoryOcidList()
+        if(ocid == emptyOcid) return
+        prefs.edit {
+            putString(historyCharacterKey,ocidList.filter { it != ocid }.toJson())
+        }
+    }
+
     private fun SharedPreferences.Editor.addFavoriteOcid(ocid : String, ocidList : List<String>) {
         putString(favoriteCharacterKey, (ocidList + ocid).toJson())
     }
@@ -97,7 +126,7 @@ class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : 
         private const val MapleMKey = "MapleMSharedPrefence"
         private const val mainCharacterKey = "MainCharacter"
         private const val favoriteCharacterKey = "FavoriteCharacter"
-
+        private const val historyCharacterKey = "HistoryCharacter"
         private const val emptyOcid = ""
     }
 }
