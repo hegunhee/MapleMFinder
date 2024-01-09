@@ -90,6 +90,14 @@ class DefaultRepository @Inject constructor(
         mapleMLocalDataSource.deleteHistoryOcid(ocid)
     }
 
+    override suspend fun getFavoriteCharacterList(): Result<List<Character>> {
+        return runCatching {
+            mapleMLocalDataSource.getFavoriteOcidList().map { ocid ->
+                getCharacterTotalInfo(ocid).getOrThrow()
+            }
+        }
+    }
+
     override fun isFavoriteListEmpty(): Result<Boolean> {
         return runCatching{ mapleMLocalDataSource.isFavoriteListEmpty() }
     }

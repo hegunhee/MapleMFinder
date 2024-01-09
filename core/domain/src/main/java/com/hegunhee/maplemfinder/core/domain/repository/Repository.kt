@@ -24,5 +24,7 @@ interface Repository {
 
     fun deleteHistoryOcid(ocid : String)
 
+    suspend fun getFavoriteCharacterList() : Result<List<Character>>
+
     fun isFavoriteListEmpty() : Result<Boolean>
 }

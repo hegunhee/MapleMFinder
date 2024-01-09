@@ -28,6 +28,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":feature:main"))
     implementation(project(":feature:search"))
+    implementation(project(":feature:favorite"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.ktx)
