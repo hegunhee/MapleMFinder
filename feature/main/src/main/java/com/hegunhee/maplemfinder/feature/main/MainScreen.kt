@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hegunhee.maplefinder.core.model.mapleM.Character
+import com.hegunhee.maplemfinder.core.ui.card.CharacterCard
 import com.hegunhee.maplemfinder.core.ui.card.MainFavoriteButton
 import com.hegunhee.maplemfinder.core.ui.card.MainLikeButton
 import com.hegunhee.maplemfinder.core.ui.card.MainSearchButton
@@ -54,7 +55,8 @@ private fun MainScreen(
                 onItemClick = onSearchClick
             )
         }else {
-            Text(mainCharacter.toString())
+            Text(text = "메인 캐릭터")
+            CharacterCard(character = mainCharacter,isNormalCharacterCard = false, onCardClick = { }, onLikeClick = { }, onFavoriteClick = { })
         }
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
         MainFavoriteButton(

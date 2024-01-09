@@ -38,6 +38,7 @@ import com.hegunhee.maplemfinder.core.designsystem.theme.Sky
 @Composable
 fun CharacterCard(
     character : Character,
+    isNormalCharacterCard: Boolean = true,
     onCardClick : (String) -> Unit,
     onLikeClick : (String) -> Unit,
     onFavoriteClick : (String) -> Unit
@@ -57,6 +58,7 @@ fun CharacterCard(
                 level = character.info.level,
                 isMain = character.isMain,
                 isFavorite = character.isFavorite,
+                isNormalCharacterCard = isNormalCharacterCard,
                 onLikeClick = onLikeClick,
                 onFavoriteClick = onFavoriteClick
             )
@@ -78,6 +80,7 @@ private fun CharacterCardHeader(
     level : Int,
     isMain : Boolean = false,
     isFavorite : Boolean = false,
+    isNormalCharacterCard : Boolean,
     onLikeClick : (String) -> Unit,
     onFavoriteClick : (String) -> Unit
 ) {
@@ -91,36 +94,38 @@ private fun CharacterCardHeader(
         Spacer(modifier = Modifier.width(10.dp))
         Text(text = "Lv. $level", fontSize = 18.sp,color = MapleColor)
         Spacer(modifier = Modifier.weight(1f))
-        Row(modifier = Modifier
-            .padding(10.dp)
-            .clip(shape = RoundedCornerShape(20))
-            .background(color = DeepSkyBlue)) {
-            IconButton(
-                onClick = { onLikeClick(ocid) }) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_like_24),
-                    contentDescription = world.name,
-                    tint = if(isMain) {
-                        Color.Red
-                    }else {
-                        Color.White
-                    }
-                )
-            }
-            Spacer(modifier = Modifier
-                .width(5.dp)
-                .height(48.dp)
-                .background(Color.White))
-            IconButton(onClick = { onFavoriteClick(ocid) }) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_star_24),
-                    contentDescription = world.name,
-                    tint = if(isFavorite) {
-                        Color.Yellow
-                    }else {
-                        Color.White
-                    }
-                )
+        if(isNormalCharacterCard) {
+            Row(modifier = Modifier
+                .padding(10.dp)
+                .clip(shape = RoundedCornerShape(20))
+                .background(color = DeepSkyBlue)) {
+                IconButton(
+                    onClick = { onLikeClick(ocid) }) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_like_24),
+                        contentDescription = world.name,
+                        tint = if(isMain) {
+                            Color.Red
+                        }else {
+                            Color.White
+                        }
+                    )
+                }
+                Spacer(modifier = Modifier
+                    .width(5.dp)
+                    .height(48.dp)
+                    .background(Color.White))
+                IconButton(onClick = { onFavoriteClick(ocid) }) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_star_24),
+                        contentDescription = world.name,
+                        tint = if(isFavorite) {
+                            Color.Yellow
+                        }else {
+                            Color.White
+                        }
+                    )
+                }
             }
         }
     }
