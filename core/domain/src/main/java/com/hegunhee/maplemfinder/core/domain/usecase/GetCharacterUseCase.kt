@@ -11,4 +11,9 @@ class GetCharacterUseCase @Inject constructor(
     suspend operator fun invoke(name : String,worldName : String) : Result<Character> {
         return repository.getCharacterTotalInfo(name = name, worldName = worldName)
     }
+
+    suspend operator fun invoke(ocid : String) : Result<Character> {
+        return repository.getCharacterTotalInfo(ocid = ocid)
+    }
+
 }
