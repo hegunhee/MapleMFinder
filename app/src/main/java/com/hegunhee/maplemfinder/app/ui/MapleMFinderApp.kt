@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hegunhee.maplemfinder.app.ui.theme.MapleMFinderTheme
+import com.hegunhee.maplemfinder.feature.detail.detailNavGraph
+import com.hegunhee.maplemfinder.feature.detail.navigateDetail
 import com.hegunhee.maplemfinder.feature.favorite.favoriteNavGraph
 import com.hegunhee.maplemfinder.feature.favorite.navigateFavorite
 import com.hegunhee.maplemfinder.feature.main.MainNavGraph
@@ -29,6 +31,10 @@ fun MapleMFinderApp(
             searchNavGraph()
 
             favoriteNavGraph()
+
+            detailNavGraph(
+                popBackStack = rememberMapleMAppState::popBackStack
+            )
         }
     }
 }
@@ -60,5 +66,9 @@ class MapleMAppState(
 
     fun navigateFavorite() {
         navController.navigateFavorite()
+    }
+
+    fun navigateDetail(ocid : String) {
+        navController.navigateDetail(ocid)
     }
 }
