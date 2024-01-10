@@ -153,13 +153,7 @@ private fun CharacterCardContents(
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center
             )
-            // 추후 loginState를 구체화할예정
-            val loginState = if(date.lastLoginDate > date.lastLogoutDate) {
-                "최근 접속중"
-            }else {
-                date.lastLoginDate
-            }
-            Text("최근 접속 : $loginState", fontSize = 15.sp)
+            Text("최근 접속 : ${date.loginStateText}", fontSize = 15.sp)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
