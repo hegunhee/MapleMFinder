@@ -24,7 +24,8 @@ fun CharacterInfoResponse.toCharacterDate() : CharacterDate {
     return CharacterDate(
         createDate = createDate,
         lastLoginDate = lastLoginDate,
-        lastLogoutDate = lastLogoutDate
+        lastLogoutDate = lastLogoutDate,
+        loginStateText = getLoginStateString(lastLoginDate,lastLogoutDate)
     )
 }
 

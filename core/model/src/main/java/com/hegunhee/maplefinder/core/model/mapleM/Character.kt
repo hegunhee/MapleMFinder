@@ -17,7 +17,7 @@ data class Character(
             name = "",
             world = MapleMWorld("",0),
             info = CharacterInfo("","",0L,0),
-            date = CharacterDate("","",""),
+            date = CharacterDate("","","",""),
             statusList = emptyList(),
             equippedItemList = emptyList(),
             isMain = false,
