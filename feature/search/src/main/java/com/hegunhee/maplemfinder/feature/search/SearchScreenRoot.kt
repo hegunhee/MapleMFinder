@@ -41,7 +41,8 @@ import com.hegunhee.maplemfinder.core.ui.screen.HistoryScreen
 
 @Composable
 fun SearchScreenRoot(
-    viewModel : SearchViewModel = hiltViewModel()
+    viewModel : SearchViewModel = hiltViewModel(),
+    onDetailClick : (String) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
@@ -65,7 +66,7 @@ fun SearchScreenRoot(
                 searchState = uiState.searchState,
                 setName = viewModel::setSearchQuery,
                 setWorld = setWorld,
-                onItemClick = { },
+                onItemClick = onDetailClick,
                 isWorldDialogOpen = isWorldDialogOpen,
                 onSelectedWorldButtonClick = openWorldDialog,
                 onSearchClick = viewModel::searchCharacter,

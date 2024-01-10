@@ -9,9 +9,11 @@ fun NavController.navigateFavorite() {
     navigate(FavoriteNavGraph.favoriteRoute)
 }
 
-fun NavGraphBuilder.favoriteNavGraph() {
+fun NavGraphBuilder.favoriteNavGraph(
+    onDetailClick : (String) -> Unit
+) {
     composable(route = FavoriteNavGraph.favoriteRoute) {
-        FavoriteScreenRoot(onItemClick = { })
+        FavoriteScreenRoot(onItemClick = onDetailClick)
     }
 }
 object FavoriteNavGraph {

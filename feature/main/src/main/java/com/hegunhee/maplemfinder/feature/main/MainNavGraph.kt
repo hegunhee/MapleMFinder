@@ -10,12 +10,14 @@ fun NavController.navigateMain() {
 
 fun NavGraphBuilder.mainNavGraph(
     onSearchClick : () -> Unit,
-    onFavoriteClick : () -> Unit
+    onFavoriteClick : () -> Unit,
+    onDetailClick : (String) -> Unit
 ) {
     composable(route = MainNavGraph.mainRoute) {
         MainScreenRoot(
             onSearchClick = onSearchClick,
-            onFavoriteClick = onFavoriteClick
+            onFavoriteClick = onFavoriteClick,
+            onDetailClick = onDetailClick
         )
     }
 }
