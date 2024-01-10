@@ -8,9 +8,13 @@ fun NavController.navigateSearch() {
     navigate(SearchNavGraph.searchRoute)
 }
 
-fun NavGraphBuilder.searchNavGraph() {
+fun NavGraphBuilder.searchNavGraph(
+    onDetailClick : (String) -> Unit
+) {
     composable(route = SearchNavGraph.searchRoute) {
-        SearchScreenRoot()
+        SearchScreenRoot(
+            onDetailClick = onDetailClick
+        )
     }
 }
 object SearchNavGraph {

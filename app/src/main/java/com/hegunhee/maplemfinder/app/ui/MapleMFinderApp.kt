@@ -25,12 +25,17 @@ fun MapleMFinderApp(
         NavHost(navController = rememberMapleMAppState.navController, startDestination = MainNavGraph.mainRoute) {
             mainNavGraph(
                 onSearchClick = rememberMapleMAppState::navigateSearch,
-                onFavoriteClick = rememberMapleMAppState::navigateFavorite
+                onFavoriteClick = rememberMapleMAppState::navigateFavorite,
+                onDetailClick = rememberMapleMAppState::navigateDetail
             )
 
-            searchNavGraph()
+            searchNavGraph(
+                onDetailClick = rememberMapleMAppState::navigateDetail
+            )
 
-            favoriteNavGraph()
+            favoriteNavGraph(
+                onDetailClick = rememberMapleMAppState::navigateDetail
+            )
 
             detailNavGraph(
                 popBackStack = rememberMapleMAppState::popBackStack

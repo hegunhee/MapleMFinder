@@ -21,7 +21,8 @@ import com.hegunhee.maplemfinder.core.ui.card.MainSearchButton
 fun MainScreenRoot(
     viewModel : MainViewModel = hiltViewModel(),
     onSearchClick : () -> Unit,
-    onFavoriteClick : () -> Unit
+    onFavoriteClick : () -> Unit,
+    onDetailClick : (String) -> Unit
 ) {
     LaunchedEffect(key1 = viewModel.uiState) {
         viewModel.fetchData()
@@ -34,7 +35,8 @@ fun MainScreenRoot(
                 mainCharacter = uiState.mainCharacter,
                 isFavoriteListEmpty = uiState.isFavoriteListEmpty,
                 onSearchClick = onSearchClick,
-                onFavoriteClick = onFavoriteClick
+                onFavoriteClick = onFavoriteClick,
+                onDetailClick = onDetailClick
             )
         }
         is MainUiState.Error -> { }
@@ -46,7 +48,8 @@ private fun MainScreen(
     mainCharacter : Character,
     isFavoriteListEmpty : Boolean,
     onSearchClick: () -> Unit,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: () -> Unit,
+    onDetailClick : (String) -> Unit
 ) {
     Column(modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp)) {
         MainSearchButton(
@@ -59,7 +62,7 @@ private fun MainScreen(
             )
         }else {
             Text(text = "메인 캐릭터")
-            CharacterCard(character = mainCharacter,isNormalCharacterCard = false, onCardClick = { }, onLikeClick = { }, onFavoriteClick = { })
+            CharacterCard(character = mainCharacter,isNormalCharacterCard = false, onCardClick = onDetailClick, onLikeClick = { }, onFavoriteClick = { })
         }
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
@@ -82,6 +85,7 @@ private fun MainScreenPreview() {
         mainCharacter = Character.EMPTY,
         isFavoriteListEmpty = false,
         onSearchClick = { },
-        onFavoriteClick = { }
+        onFavoriteClick = { },
+        onDetailClick = { }
     )
 }
