@@ -3,6 +3,8 @@ package com.hegunhee.maplemfinder.feature.main
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,6 +18,7 @@ import com.hegunhee.maplemfinder.core.ui.card.CharacterCard
 import com.hegunhee.maplemfinder.core.ui.card.MainFavoriteButton
 import com.hegunhee.maplemfinder.core.ui.card.MainLikeButton
 import com.hegunhee.maplemfinder.core.ui.card.MainSearchButton
+import com.hegunhee.maplemfinder.core.ui.topbar.MapleMMainTopbar
 
 @Composable
 fun MainScreenRoot(
@@ -43,6 +46,7 @@ fun MainScreenRoot(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MainScreen(
     mainCharacter : Character,
@@ -51,30 +55,36 @@ private fun MainScreen(
     onFavoriteClick: () -> Unit,
     onDetailClick : (String) -> Unit
 ) {
-    Column(modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp)) {
-        MainSearchButton(
-            onItemClick = onSearchClick
-        )
-        Spacer(modifier = Modifier.padding(vertical = 10.dp))
-        if(mainCharacter == Character.EMPTY) {
-            MainLikeButton(
+    Scaffold(
+        topBar = {
+            MapleMMainTopbar()
+        }
+    ) { paddingValues ->
+        Column(modifier = Modifier.padding(paddingValues).padding(vertical = 10.dp, horizontal = 10.dp)) {
+            MainSearchButton(
                 onItemClick = onSearchClick
             )
-        }else {
-            Text(text = "메인 캐릭터")
-            CharacterCard(character = mainCharacter,isNormalCharacterCard = false, onCardClick = onDetailClick, onLikeClick = { }, onFavoriteClick = { })
-        }
-        Spacer(modifier = Modifier.padding(vertical = 10.dp))
+            Spacer(modifier = Modifier.padding(vertical = 10.dp))
+            if(mainCharacter == Character.EMPTY) {
+                MainLikeButton(
+                    onItemClick = onSearchClick
+                )
+            }else {
+                Text(text = "메인 캐릭터")
+                CharacterCard(character = mainCharacter,isNormalCharacterCard = false, onCardClick = onDetailClick, onLikeClick = { }, onFavoriteClick = { })
+            }
+            Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
-        val favoriteClick = if(isFavoriteListEmpty) {
-            onSearchClick
-        } else {
-            onFavoriteClick
+            val favoriteClick = if(isFavoriteListEmpty) {
+                onSearchClick
+            } else {
+                onFavoriteClick
+            }
+            MainFavoriteButton(
+                onItemClick = favoriteClick,
+                isFavoriteItemEmpty = isFavoriteListEmpty
+            )
         }
-        MainFavoriteButton(
-            onItemClick = favoriteClick,
-            isFavoriteItemEmpty = isFavoriteListEmpty
-        )
     }
 }
 
