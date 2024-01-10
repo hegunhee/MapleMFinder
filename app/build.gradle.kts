@@ -26,6 +26,7 @@ dependencies {
 
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
+    implementation(project(":feature:detail"))
     implementation(project(":feature:main"))
     implementation(project(":feature:search"))
     implementation(project(":feature:favorite"))
