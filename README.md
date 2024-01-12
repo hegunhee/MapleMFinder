@@ -1,4 +1,4 @@
-## Maple, MapleM 정보찾기 앱 (with compose)
+## MapleM 정보찾기 앱 (with compose)
 nexon open api를 이용해 Maple, MapleM 캐릭터 정보를 찾고 저장할 수 있는 앱입니다.  
 ##  개발환경
 Kotlin = Kotlin 1.8  
