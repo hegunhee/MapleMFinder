@@ -1,4 +1,4 @@
-package com.hegunhee.maplefinder.core.model.mapleM
+package com.hegunhee.maplefinder.core.model
 
 data class Character(
     val ocid : String,
@@ -12,7 +12,7 @@ data class Character(
     val isFavorite : Boolean
 ) {
     companion object {
-        val EMPTY : Character= Character(
+        val EMPTY : Character = Character(
             ocid = "",
             name = "",
             world = MapleMWorld("",0),

@@ -1,7 +1,7 @@
 package com.hegunhee.maplemfinder.core.data.di
 
-import com.hegunhee.maplemfinder.core.data.dataSource.local.DefaultMapleMLocalSource
-import com.hegunhee.maplemfinder.core.data.dataSource.local.MapleMLocalDataSource
+import com.hegunhee.maplemfinder.core.data.dataSource.local.DefaultLocalSource
+import com.hegunhee.maplemfinder.core.data.dataSource.local.LocalDataSource
 import com.hegunhee.maplemfinder.core.data.dataSource.remote.DefaultMapleMRemoteDataSource
 import com.hegunhee.maplemfinder.core.data.dataSource.remote.MapleMRemoteDataSource
 import dagger.Binds
@@ -16,9 +16,9 @@ abstract class DataSourceModule {
 
     @Binds
     @Singleton
-    abstract fun provideMapleMRemoteDataSource(defaultMapleMRemoteDataSource: DefaultMapleMRemoteDataSource) : MapleMRemoteDataSource
+    abstract fun provideRemoteDataSource(defaultMapleMRemoteDataSource: DefaultMapleMRemoteDataSource) : MapleMRemoteDataSource
 
     @Binds
     @Singleton
-    abstract fun provideMapleMLocalDataSource(defaultMapleMLocalDataSource: DefaultMapleMLocalSource) : MapleMLocalDataSource
+    abstract fun provideLocalDataSource(defaultMapleMLocalDataSource: DefaultLocalSource) : LocalDataSource
 }

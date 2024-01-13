@@ -16,13 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplefinder.core.model.MapleMWorld
 import com.hegunhee.maplemfinder.core.designsystem.R
 
 @Composable
 fun WorldSelectButton(
     onButtonClick : () -> Unit,
-    selectedWorld : MapleMWorld 
+    selectedWorld : MapleMWorld
 ) {
     Card(
         modifier = Modifier.clickable { onButtonClick() }

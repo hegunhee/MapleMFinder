@@ -1,6 +1,6 @@
 package com.hegunhee.maplemfinder.core.domain.usecase
 
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplefinder.core.model.MapleMWorld
 import com.hegunhee.maplemfinder.core.domain.repository.Repository
 import javax.inject.Inject
 

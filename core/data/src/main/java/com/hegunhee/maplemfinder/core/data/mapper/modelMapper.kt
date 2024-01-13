@@ -1,11 +1,11 @@
 package com.hegunhee.maplemfinder.core.data.mapper
 
-import com.hegunhee.maplefinder.core.model.mapleM.CharacterDate
-import com.hegunhee.maplefinder.core.model.mapleM.CharacterInfo
-import com.hegunhee.maplefinder.core.model.mapleM.CharacterStatus
-import com.hegunhee.maplefinder.core.model.mapleM.Item
-import com.hegunhee.maplefinder.core.model.mapleM.ItemGrade
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplefinder.core.model.CharacterDate
+import com.hegunhee.maplefinder.core.model.CharacterInfo
+import com.hegunhee.maplefinder.core.model.CharacterStatus
+import com.hegunhee.maplefinder.core.model.Item
+import com.hegunhee.maplefinder.core.model.ItemGrade
+import com.hegunhee.maplefinder.core.model.MapleMWorld
 import com.hegunhee.maplemfinder.core.data.R
 import com.hegunhee.maplemfinder.core.data.api.model.CharacterInfoResponse
 import com.hegunhee.maplemfinder.core.data.api.model.CharacterItemResponse

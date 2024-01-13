@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.hegunhee.maplefinder.core.model.mapleM.Character
+import com.hegunhee.maplefinder.core.model.Character
 import com.hegunhee.maplemfinder.core.ui.card.CharacterCard
 
 @Composable

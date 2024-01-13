@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MapleMPreferenceManager @Inject constructor(@ApplicationContext context : Context) {
+class PreferenceManager @Inject constructor(@ApplicationContext context : Context) {
 
     private val prefs = context.getSharedPreferences(MapleMKey,Context.MODE_PRIVATE)
 

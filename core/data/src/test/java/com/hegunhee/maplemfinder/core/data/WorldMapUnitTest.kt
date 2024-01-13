@@ -1,6 +1,6 @@
 package com.hegunhee.maplemfinder.core.data
 
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplefinder.core.model.MapleMWorld
 import com.hegunhee.maplemfinder.core.data.mapper.worldList
 import com.hegunhee.maplemfinder.core.data.mapper.worldNameToWorld
 import org.junit.Test

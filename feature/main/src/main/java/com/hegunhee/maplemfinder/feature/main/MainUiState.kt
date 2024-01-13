@@ -1,6 +1,6 @@
 package com.hegunhee.maplemfinder.feature.main
 
-import com.hegunhee.maplefinder.core.model.mapleM.Character
+import com.hegunhee.maplefinder.core.model.Character
 
 sealed interface MainUiState {
 

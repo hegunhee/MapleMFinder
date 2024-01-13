@@ -1,8 +1,8 @@
 package com.hegunhee.maplemfinder.core.domain.repository
 
-import com.hegunhee.maplefinder.core.model.mapleM.Character
-import com.hegunhee.maplefinder.core.model.mapleM.CharacterSearch
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplefinder.core.model.Character
+import com.hegunhee.maplefinder.core.model.CharacterSearch
+import com.hegunhee.maplefinder.core.model.MapleMWorld
 
 interface Repository {
 

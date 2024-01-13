@@ -1,8 +1,8 @@
 package com.hegunhee.maplemfinder.core.data.dataSource.local
 
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplefinder.core.model.MapleMWorld
 
-interface MapleMLocalDataSource {
+interface LocalDataSource {
 
     fun getMainOcid() : String
 

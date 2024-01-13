@@ -26,10 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hegunhee.maplefinder.core.model.mapleM.Character
-import com.hegunhee.maplefinder.core.model.mapleM.CharacterDate
-import com.hegunhee.maplefinder.core.model.mapleM.CharacterStatus
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplefinder.core.model.Character
+import com.hegunhee.maplefinder.core.model.CharacterDate
+import com.hegunhee.maplefinder.core.model.CharacterStatus
+import com.hegunhee.maplefinder.core.model.MapleMWorld
 import com.hegunhee.maplemfinder.core.designsystem.R
 import com.hegunhee.maplemfinder.core.designsystem.theme.DeepSkyBlue
 import com.hegunhee.maplemfinder.core.designsystem.theme.MapleColor

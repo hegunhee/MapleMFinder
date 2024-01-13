@@ -29,9 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.hegunhee.maplefinder.core.model.mapleM.Character
-import com.hegunhee.maplefinder.core.model.mapleM.CharacterSearch
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplefinder.core.model.Character
+import com.hegunhee.maplefinder.core.model.CharacterSearch
+import com.hegunhee.maplefinder.core.model.MapleMWorld
 import com.hegunhee.maplemfinder.core.ui.button.WorldSelectButton
 import com.hegunhee.maplemfinder.core.ui.button.defaultWorld
 import com.hegunhee.maplemfinder.core.ui.card.CharacterCard

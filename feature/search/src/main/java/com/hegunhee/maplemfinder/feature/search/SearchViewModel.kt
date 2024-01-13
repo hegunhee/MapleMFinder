@@ -2,7 +2,7 @@ package com.hegunhee.maplemfinder.feature.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
+import com.hegunhee.maplefinder.core.model.MapleMWorld
 import com.hegunhee.maplemfinder.core.domain.usecase.AddHistoryOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.DeleteHistoryOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.SetToggleFavoriteOcidUseCase
@@ -56,7 +56,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun searchCharacter(name : String,world :MapleMWorld) {
+    fun searchCharacter(name : String,world : MapleMWorld) {
         viewModelScope.launch {
             getCharacterUseCase(name = name, worldName = world.name)
                 .onSuccess {

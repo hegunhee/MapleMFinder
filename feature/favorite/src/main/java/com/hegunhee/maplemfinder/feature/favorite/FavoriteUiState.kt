@@ -1,6 +1,6 @@
 package com.hegunhee.maplemfinder.feature.favorite
 
-import com.hegunhee.maplefinder.core.model.mapleM.Character
+import com.hegunhee.maplefinder.core.model.Character
 
 sealed interface FavoriteUiState {
 

@@ -1,4 +1,4 @@
-package com.hegunhee.maplefinder.core.model.mapleM
+package com.hegunhee.maplefinder.core.model
 
 data class CharacterStatus(
     val name : String,

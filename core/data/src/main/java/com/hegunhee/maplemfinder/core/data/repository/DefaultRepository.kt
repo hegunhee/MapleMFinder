@@ -1,9 +1,9 @@
 package com.hegunhee.maplemfinder.core.data.repository
 
-import com.hegunhee.maplefinder.core.model.mapleM.Character
-import com.hegunhee.maplefinder.core.model.mapleM.CharacterSearch
-import com.hegunhee.maplefinder.core.model.mapleM.MapleMWorld
-import com.hegunhee.maplemfinder.core.data.dataSource.local.MapleMLocalDataSource
+import com.hegunhee.maplefinder.core.model.Character
+import com.hegunhee.maplefinder.core.model.CharacterSearch
+import com.hegunhee.maplefinder.core.model.MapleMWorld
+import com.hegunhee.maplemfinder.core.data.dataSource.local.LocalDataSource
 import com.hegunhee.maplemfinder.core.data.dataSource.remote.MapleMRemoteDataSource
 import com.hegunhee.maplemfinder.core.data.mapper.toCharacterDate
 import com.hegunhee.maplemfinder.core.data.mapper.toCharacterInfo
@@ -14,7 +14,7 @@ import com.hegunhee.maplemfinder.core.domain.repository.Repository
 import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(
-    private val mapleMLocalDataSource : MapleMLocalDataSource,
+    private val localDataSource : LocalDataSource,
     private val mapleMRemoteDataSource: MapleMRemoteDataSource
 ) : Repository {
 
@@ -32,8 +32,8 @@ class DefaultRepository @Inject constructor(
             val characterDate = infoResponse.toCharacterDate()
             val characterItem = mapleMRemoteDataSource.getCharacterItem(ocid).toItemList()
             val characterStatus = mapleMRemoteDataSource.getCharacterStatus(ocid).toStatusList()
-            val isMain = mapleMLocalDataSource.isMainOcid(ocid)
-            val isFavorite = mapleMLocalDataSource.isFavoriteOcid(ocid)
+            val isMain = localDataSource.isMainOcid(ocid)
+            val isFavorite = localDataSource.isFavoriteOcid(ocid)
             Character(
                 ocid = ocid,
                 name = infoResponse.characterName,
@@ -49,15 +49,15 @@ class DefaultRepository @Inject constructor(
     }
 
     override fun getWorldList(): List<MapleMWorld> {
-        return mapleMLocalDataSource.getWorldList()
+        return localDataSource.getWorldList()
     }
 
     override fun setMainOcid(ocid: String) {
-        mapleMLocalDataSource.setMainOcid(ocid)
+        localDataSource.setMainOcid(ocid)
     }
 
     override suspend fun getMainCharacter(): Result<Character> {
-        val ocid = mapleMLocalDataSource.getMainOcid()
+        val ocid = localDataSource.getMainOcid()
         return if(ocid == "") {
             runCatching { Character.EMPTY }
         }else {
@@ -66,11 +66,11 @@ class DefaultRepository @Inject constructor(
     }
 
     override fun toggleFavoriteOcid(ocid: String) {
-        mapleMLocalDataSource.toggleFavoriteOcid(ocid)
+        localDataSource.toggleFavoriteOcid(ocid)
     }
 
     override suspend fun getHistoryCharacterList(): Result<List<CharacterSearch>> {
-        val ocidList = mapleMLocalDataSource.getHistoryOcidList()
+        val ocidList = localDataSource.getHistoryOcidList()
         if(ocidList.isEmpty()) {
             return Result.success(emptyList())
         }
@@ -83,23 +83,23 @@ class DefaultRepository @Inject constructor(
     }
 
     override fun addHistoryOcid(ocid: String) {
-        mapleMLocalDataSource.addHistoryOcid(ocid)
+        localDataSource.addHistoryOcid(ocid)
     }
 
     override fun deleteHistoryOcid(ocid: String) {
-        mapleMLocalDataSource.deleteHistoryOcid(ocid)
+        localDataSource.deleteHistoryOcid(ocid)
     }
 
     override suspend fun getFavoriteCharacterList(): Result<List<Character>> {
         return runCatching {
-            mapleMLocalDataSource.getFavoriteOcidList().map { ocid ->
+            localDataSource.getFavoriteOcidList().map { ocid ->
                 getCharacterTotalInfo(ocid).getOrThrow()
             }
         }
     }
 
     override fun isFavoriteListEmpty(): Result<Boolean> {
-        return runCatching{ mapleMLocalDataSource.isFavoriteListEmpty() }
+        return runCatching{ localDataSource.isFavoriteListEmpty() }
     }
 
 
