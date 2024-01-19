@@ -11,6 +11,8 @@ import com.hegunhee.maplemfinder.core.data.mapper.toItemList
 import com.hegunhee.maplemfinder.core.data.mapper.toStatusList
 import com.hegunhee.maplemfinder.core.data.mapper.worldNameToWorld
 import com.hegunhee.maplemfinder.core.domain.repository.Repository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(
@@ -25,13 +27,13 @@ class DefaultRepository @Inject constructor(
         }
     }
 
-    override suspend fun getCharacterTotalInfo(ocid : String) : Result<Character> {
-        return runCatching {
+    override suspend fun getCharacterTotalInfo(ocid : String) : Result<Character> = coroutineScope{
+        runCatching {
             val infoResponse = mapleMRemoteDataSource.getCharacterInfo(ocid = ocid)
             val characterInfo = infoResponse.toCharacterInfo()
             val characterDate = infoResponse.toCharacterDate()
-            val characterItem = mapleMRemoteDataSource.getCharacterItem(ocid).toItemList()
-            val characterStatus = mapleMRemoteDataSource.getCharacterStatus(ocid).toStatusList()
+            val characterItem = async{ mapleMRemoteDataSource.getCharacterItem(ocid).toItemList() }
+            val characterStatus = async{ mapleMRemoteDataSource.getCharacterStatus(ocid).toStatusList() }
             val isMain = localDataSource.isMainOcid(ocid)
             val isFavorite = localDataSource.isFavoriteOcid(ocid)
             Character(
@@ -39,9 +41,9 @@ class DefaultRepository @Inject constructor(
                 name = infoResponse.characterName,
                 world = worldNameToWorld(infoResponse.worldName),
                 date = characterDate,
-                equippedItemList = characterItem,
+                equippedItemList = characterItem.await(),
                 info = characterInfo,
-                statusList = characterStatus,
+                statusList = characterStatus.await(),
                 isMain = isMain,
                 isFavorite = isFavorite
             )
