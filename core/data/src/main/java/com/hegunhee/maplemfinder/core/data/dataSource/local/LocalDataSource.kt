@@ -1,6 +1,7 @@
 package com.hegunhee.maplemfinder.core.data.dataSource.local
 
 import com.hegunhee.maplefinder.core.model.MapleMWorld
+import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
 
@@ -10,19 +11,13 @@ interface LocalDataSource {
 
     fun isMainOcid(ocid : String) : Boolean
 
-    fun isFavoriteListEmpty() : Boolean
-
     fun getWorldList() : List<MapleMWorld>
 
-    fun getFavoriteOcidList() : List<String>
+    fun getFavoriteOcids() : Flow<Set<String>>
 
-    fun isFavoriteOcid(ocid : String) : Boolean
+    suspend fun toggleFavoriteOcid(favoriteOcids : Set<String>)
 
-    fun toggleFavoriteOcid(ocid : String)
+    fun getHistoryOcids() : Flow<Set<String>>
 
-    fun getHistoryOcidList() : List<String>
-
-    fun addHistoryOcid(ocid : String)
-
-    fun deleteHistoryOcid(ocid : String)
+    suspend fun toggleHistoryOcid(historyOcids : Set<String>)
 }

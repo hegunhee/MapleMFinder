@@ -1,11 +1,16 @@
 package com.hegunhee.maplemfinder.core.data.dataSource.local
 
 import com.hegunhee.maplefinder.core.model.MapleMWorld
+import com.hegunhee.maplemfinder.core.data.dataSource.local.datastore.FavoritePreferencesDataStore
+import com.hegunhee.maplemfinder.core.data.dataSource.local.datastore.HistoryPreferencesDataStore
 import com.hegunhee.maplemfinder.core.data.mapper.worldList
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DefaultLocalSource @Inject constructor(
-    private val preferenceManager : PreferenceManager
+    private val preferenceManager : PreferenceManager,
+    private val favoriteDataStore : FavoritePreferencesDataStore,
+    private val historyDataStore : HistoryPreferencesDataStore
 ) : LocalDataSource{
 
     override fun getMainOcid(): String {
@@ -20,35 +25,23 @@ class DefaultLocalSource @Inject constructor(
         return preferenceManager.isMainOcid(ocid)
     }
 
-    override fun isFavoriteListEmpty(): Boolean {
-        return preferenceManager.isFavoriteListEmpty()
-    }
-
     override fun getWorldList(): List<MapleMWorld> {
         return worldList
     }
 
-    override fun getFavoriteOcidList(): List<String> {
-        return preferenceManager.getFavoriteOcidList()
+    override fun getFavoriteOcids(): Flow<Set<String>> {
+        return favoriteDataStore.favoriteOcid
     }
 
-    override fun isFavoriteOcid(ocid: String): Boolean {
-        return preferenceManager.isFavoriteOcid(ocid)
+    override suspend fun toggleFavoriteOcid(favoriteOcids : Set<String>) {
+        favoriteDataStore.updateFavoriteOcid(favoriteOcids)
     }
 
-    override fun toggleFavoriteOcid(ocid: String) {
-        preferenceManager.toggleFavoriteOcid(ocid)
+    override fun getHistoryOcids(): Flow<Set<String>> {
+        return historyDataStore.historyOcid
     }
 
-    override fun getHistoryOcidList(): List<String> {
-        return preferenceManager.getHistoryOcidList()
-    }
-
-    override fun addHistoryOcid(ocid: String) {
-        preferenceManager.addHistoryOcid(ocid)
-    }
-
-    override fun deleteHistoryOcid(ocid: String) {
-        preferenceManager.deleteHistoryOcid(ocid)
+    override suspend fun toggleHistoryOcid(historyOcids: Set<String>) {
+        historyDataStore.updateHistoryOcid(historyOcids)
     }
 }

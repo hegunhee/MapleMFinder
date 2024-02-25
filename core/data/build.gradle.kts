@@ -26,6 +26,8 @@ dependencies {
 
     implementation(libs.bundles.retrofit2)
     implementation(libs.bundles.moshi)
+
+    implementation(libs.androidx.datastore)
 }
 
 secrets {
