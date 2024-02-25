@@ -3,7 +3,6 @@ package com.hegunhee.maplemfinder.core.domain.repository
 import com.hegunhee.maplefinder.core.model.Character
 import com.hegunhee.maplefinder.core.model.CharacterSearch
 import com.hegunhee.maplefinder.core.model.MapleMWorld
-import kotlinx.coroutines.flow.Flow
 
 interface Repository {
 
@@ -13,7 +12,7 @@ interface Repository {
 
     fun getWorldList() : List<MapleMWorld>
 
-    fun setMainOcid(ocid : String)
+    suspend fun updateMainOcid(ocid : String)
 
     suspend fun getMainCharacter() : Result<Character>
 

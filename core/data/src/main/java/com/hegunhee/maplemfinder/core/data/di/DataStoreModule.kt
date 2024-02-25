@@ -17,9 +17,10 @@ import javax.inject.Singleton
 object DataStoreModule {
     private const val FAVORITE_OCID_DATASTORE_NAME = "FAVORITE_PREFERENCES"
     private const val HISTORY_OCID_DATASTORE_NAME = "HISTORY_PREFERENCES"
+    private const val MAIN_OCID_DATASTORE_NAME = "MAIN_PREFERENCES"
     private val Context.favoriteDataStore by preferencesDataStore(FAVORITE_OCID_DATASTORE_NAME)
     private val Context.historyDataStore by preferencesDataStore(HISTORY_OCID_DATASTORE_NAME)
-
+    private val Context.mainOcidDataStore by preferencesDataStore(MAIN_OCID_DATASTORE_NAME)
     @Provides
     @Singleton
     @Named("favorite")
@@ -33,4 +34,11 @@ object DataStoreModule {
     fun provideHistoryDataStore(
         @ApplicationContext context : Context
     ) : DataStore<Preferences> = context.historyDataStore
+
+    @Provides
+    @Singleton
+    @Named("mainOcid")
+    fun provideMainOcidDataStore(
+        @ApplicationContext context : Context
+    ) : DataStore<Preferences> = context.mainOcidDataStore
 }

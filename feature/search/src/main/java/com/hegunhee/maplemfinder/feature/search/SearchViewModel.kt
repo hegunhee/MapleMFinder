@@ -7,7 +7,7 @@ import com.hegunhee.maplemfinder.core.domain.usecase.ToggleFavoriteOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetCharacterUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetHistoryCharacterListUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetWorldListUseCase
-import com.hegunhee.maplemfinder.core.domain.usecase.SetMainOcidUseCase
+import com.hegunhee.maplemfinder.core.domain.usecase.UpdateMainOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.ToggleHistoryOcidUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val getWorldListUseCase: GetWorldListUseCase,
     private val getCharacterUseCase : GetCharacterUseCase,
-    private val setMainOcidUseCase: SetMainOcidUseCase,
+    private val updateMainOcidUseCase: UpdateMainOcidUseCase,
     private val toggleFavoriteOcidUseCase: ToggleFavoriteOcidUseCase,
     private val getHistoryCharacterListUseCase: GetHistoryCharacterListUseCase,
     private val toggleHistoryOcidUseCase : ToggleHistoryOcidUseCase
@@ -68,7 +68,7 @@ class SearchViewModel @Inject constructor(
 
     fun onCharacterLikeClick(ocid : String) {
         viewModelScope.launch {
-            setMainOcidUseCase(ocid)
+            updateMainOcidUseCase(ocid)
             getCharacterUseCase(ocid = ocid)
                 .onSuccess {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Success(it))

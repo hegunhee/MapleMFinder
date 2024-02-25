@@ -22,6 +22,7 @@ class DefaultRepository @Inject constructor(
     private val mapleMRemoteDataSource: MapleMRemoteDataSource
 ) : Repository {
 
+    private val mainOcid : Flow<String> = localDataSource.getMainOcid()
     private val favoriteOcids : Flow<Set<String>> = localDataSource.getFavoriteOcids()
     private val historyOcids : Flow<Set<String>> = localDataSource.getHistoryOcids()
     override suspend fun getCharacterTotalInfo(name: String, worldName: String): Result<Character> {
@@ -38,7 +39,7 @@ class DefaultRepository @Inject constructor(
             val characterDate = infoResponse.toCharacterDate()
             val characterItem = async{ mapleMRemoteDataSource.getCharacterItem(ocid).toItemList() }
             val characterStatus = async{ mapleMRemoteDataSource.getCharacterStatus(ocid).toStatusList() }
-            val isMain = localDataSource.isMainOcid(ocid)
+            val isMain = mainOcid.first() == ocid
             val isFavorite = favoriteOcids.first().contains(ocid)
             Character(
                 ocid = ocid,
@@ -58,12 +59,19 @@ class DefaultRepository @Inject constructor(
         return localDataSource.getWorldList()
     }
 
-    override fun setMainOcid(ocid: String) {
-        localDataSource.setMainOcid(ocid)
+    override suspend fun updateMainOcid(ocid: String) {
+        val currentMainOcid = mainOcid.first()
+        localDataSource.updateMainOcid(
+            if(currentMainOcid == ocid) {
+                ""
+            }else {
+                ocid
+            }
+        )
     }
 
     override suspend fun getMainCharacter(): Result<Character> {
-        val ocid = localDataSource.getMainOcid()
+        val ocid = mainOcid.first()
         return if(ocid == "") {
             runCatching { Character.EMPTY }
         }else {

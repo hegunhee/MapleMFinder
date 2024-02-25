@@ -5,11 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
 
-    fun getMainOcid() : String
+    fun getMainOcid() : Flow<String>
 
-    fun setMainOcid(coid : String)
-
-    fun isMainOcid(ocid : String) : Boolean
+    suspend fun updateMainOcid(ocid : String)
 
     fun getWorldList() : List<MapleMWorld>
 
