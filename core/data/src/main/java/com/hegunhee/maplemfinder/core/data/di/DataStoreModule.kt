@@ -16,9 +16,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
     private const val FAVORITE_OCID_DATASTORE_NAME = "FAVORITE_PREFERENCES"
-    private const val HISTORY_OCID_DATSTORE_NAME = "HISTORY_PREFERENCES"
+    private const val HISTORY_OCID_DATASTORE_NAME = "HISTORY_PREFERENCES"
     private val Context.favoriteDataStore by preferencesDataStore(FAVORITE_OCID_DATASTORE_NAME)
-    private val Context.historyDataStore by preferencesDataStore(HISTORY_OCID_DATSTORE_NAME)
+    private val Context.historyDataStore by preferencesDataStore(HISTORY_OCID_DATASTORE_NAME)
 
     @Provides
     @Singleton
