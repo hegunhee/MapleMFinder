@@ -3,7 +3,7 @@ package com.hegunhee.maplemfinder.feature.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.maplemfinder.core.domain.usecase.GetCharacterUseCase
-import com.hegunhee.maplemfinder.core.domain.usecase.SetMainOcidUseCase
+import com.hegunhee.maplemfinder.core.domain.usecase.UpdateMainOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.ToggleFavoriteOcidUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getCharacterUseCase: GetCharacterUseCase,
-    private val setMainOcidUseCase: SetMainOcidUseCase,
+    private val updateMainOcidUseCase: UpdateMainOcidUseCase,
     private val toggleFavoriteOcidUseCase: ToggleFavoriteOcidUseCase
 ) : ViewModel(){
 
@@ -35,7 +35,7 @@ class DetailViewModel @Inject constructor(
 
     fun setMainCharacter(ocid : String) {
         viewModelScope.launch {
-            setMainOcidUseCase(ocid)
+            updateMainOcidUseCase(ocid)
             getCharacter(ocid)
         }
     }
