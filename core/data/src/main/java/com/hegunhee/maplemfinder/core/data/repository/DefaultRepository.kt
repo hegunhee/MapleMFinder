@@ -13,6 +13,8 @@ import com.hegunhee.maplemfinder.core.data.mapper.worldNameToWorld
 import com.hegunhee.maplemfinder.core.domain.repository.Repository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(
@@ -20,6 +22,8 @@ class DefaultRepository @Inject constructor(
     private val mapleMRemoteDataSource: MapleMRemoteDataSource
 ) : Repository {
 
+    private val favoriteOcids : Flow<Set<String>> = localDataSource.getFavoriteOcids()
+    private val historyOcids : Flow<Set<String>> = localDataSource.getHistoryOcids()
     override suspend fun getCharacterTotalInfo(name: String, worldName: String): Result<Character> {
         return runCatching {
             val ocid = mapleMRemoteDataSource.getCharacterOcid(name,worldName).id
@@ -35,7 +39,7 @@ class DefaultRepository @Inject constructor(
             val characterItem = async{ mapleMRemoteDataSource.getCharacterItem(ocid).toItemList() }
             val characterStatus = async{ mapleMRemoteDataSource.getCharacterStatus(ocid).toStatusList() }
             val isMain = localDataSource.isMainOcid(ocid)
-            val isFavorite = localDataSource.isFavoriteOcid(ocid)
+            val isFavorite = favoriteOcids.first().contains(ocid)
             Character(
                 ocid = ocid,
                 name = infoResponse.characterName,
@@ -67,12 +71,33 @@ class DefaultRepository @Inject constructor(
         }
     }
 
-    override fun toggleFavoriteOcid(ocid: String) {
-        localDataSource.toggleFavoriteOcid(ocid)
+    override suspend fun toggleFavoriteOcid(ocid: String) {
+        val currentFavoriteOcids = favoriteOcids.first()
+        val isOcidContains = currentFavoriteOcids.contains(ocid)
+        localDataSource.toggleFavoriteOcid(
+            if(isOcidContains) {
+                currentFavoriteOcids - ocid
+            }else {
+                currentFavoriteOcids + ocid
+            }
+        )
+    }
+
+    override suspend fun getFavoriteCharacterList(): Result<List<Character>> {
+        return runCatching {
+            val currentFavoriteOcids = favoriteOcids.first()
+            currentFavoriteOcids.map { ocid ->
+                getCharacterTotalInfo(ocid).getOrThrow()
+            }.toList()
+        }
+    }
+
+    override suspend fun isFavoriteListEmpty(): Result<Boolean> {
+        return runCatching{ favoriteOcids.first().isEmpty() }
     }
 
     override suspend fun getHistoryCharacterList(): Result<List<CharacterSearch>> {
-        val ocidList = localDataSource.getHistoryOcidList()
+        val ocidList = historyOcids.first()
         if(ocidList.isEmpty()) {
             return Result.success(emptyList())
         }
@@ -84,25 +109,15 @@ class DefaultRepository @Inject constructor(
         }
     }
 
-    override fun addHistoryOcid(ocid: String) {
-        localDataSource.addHistoryOcid(ocid)
-    }
-
-    override fun deleteHistoryOcid(ocid: String) {
-        localDataSource.deleteHistoryOcid(ocid)
-    }
-
-    override suspend fun getFavoriteCharacterList(): Result<List<Character>> {
-        return runCatching {
-            localDataSource.getFavoriteOcidList().map { ocid ->
-                getCharacterTotalInfo(ocid).getOrThrow()
+    override suspend fun toggleHistoryOcid(ocid: String) {
+        val currentHistoryOcids = historyOcids.first()
+        val isOcidContains = currentHistoryOcids.contains(ocid)
+        localDataSource.toggleHistoryOcid(
+            if(isOcidContains) {
+                currentHistoryOcids - ocid
+            }else {
+                currentHistoryOcids + ocid
             }
-        }
+        )
     }
-
-    override fun isFavoriteListEmpty(): Result<Boolean> {
-        return runCatching{ localDataSource.isFavoriteListEmpty() }
-    }
-
-
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.maplemfinder.core.domain.usecase.GetCharacterUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.SetMainOcidUseCase
-import com.hegunhee.maplemfinder.core.domain.usecase.SetToggleFavoriteOcidUseCase
+import com.hegunhee.maplemfinder.core.domain.usecase.ToggleFavoriteOcidUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val getCharacterUseCase: GetCharacterUseCase,
     private val setMainOcidUseCase: SetMainOcidUseCase,
-    private val toggleFavoriteOcidUseCase: SetToggleFavoriteOcidUseCase
+    private val toggleFavoriteOcidUseCase: ToggleFavoriteOcidUseCase
 ) : ViewModel(){
 
     private val _uiState : MutableStateFlow<DetailUiState> = MutableStateFlow(DetailUiState.Loading)

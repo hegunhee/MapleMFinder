@@ -7,7 +7,7 @@ class IsFavoriteListEmptyUseCase @Inject constructor(
     private val repository: Repository
 ) {
 
-    operator fun invoke() : Result<Boolean> {
+    suspend operator fun invoke() : Result<Boolean> {
         return repository.isFavoriteListEmpty()
     }
 }

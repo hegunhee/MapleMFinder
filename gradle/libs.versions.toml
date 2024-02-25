@@ -28,6 +28,8 @@ javax-inject = "1"
 retrofit = "2.9.0"
 moshi = "1.9.3"
 
+androidxDataStore = "1.0.0"
+
 [libraries]
 androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradleVersion" }
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradleVersion" }
@@ -72,6 +74,8 @@ retrofit2-retrofit = {module = "com.squareup.retrofit2:retrofit",version.ref ="r
 retrofit2-moshi = {module = "com.squareup.retrofit2:converter-moshi",version.ref = "retrofit"}
 moshi = {module = "com.squareup.moshi:moshi",version.ref = "moshi"}
 moshi-kotlin = {module = "com.squareup.moshi:moshi-kotlin",version.ref = "moshi"}
+
+androidx-datastore = { module = "androidx.datastore:datastore-preferences",version.ref = "androidxDataStore"}
 
 [bundles]
 compose-ui = ["compose-ui","compose-graphics","compose-preview"]

@@ -3,13 +3,12 @@ package com.hegunhee.maplemfinder.feature.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.maplefinder.core.model.MapleMWorld
-import com.hegunhee.maplemfinder.core.domain.usecase.AddHistoryOcidUseCase
-import com.hegunhee.maplemfinder.core.domain.usecase.DeleteHistoryOcidUseCase
-import com.hegunhee.maplemfinder.core.domain.usecase.SetToggleFavoriteOcidUseCase
+import com.hegunhee.maplemfinder.core.domain.usecase.ToggleFavoriteOcidUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetCharacterUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetHistoryCharacterListUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.GetWorldListUseCase
 import com.hegunhee.maplemfinder.core.domain.usecase.SetMainOcidUseCase
+import com.hegunhee.maplemfinder.core.domain.usecase.ToggleHistoryOcidUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,10 +21,9 @@ class SearchViewModel @Inject constructor(
     private val getWorldListUseCase: GetWorldListUseCase,
     private val getCharacterUseCase : GetCharacterUseCase,
     private val setMainOcidUseCase: SetMainOcidUseCase,
-    private val setToggleFavoriteOcidUseCase: SetToggleFavoriteOcidUseCase,
+    private val toggleFavoriteOcidUseCase: ToggleFavoriteOcidUseCase,
     private val getHistoryCharacterListUseCase: GetHistoryCharacterListUseCase,
-    private val addHistoryOcidUseCase : AddHistoryOcidUseCase,
-    private val deleteHistoryOcidUseCase: DeleteHistoryOcidUseCase
+    private val toggleHistoryOcidUseCase : ToggleHistoryOcidUseCase
 ) : ViewModel() {
 
     private val _worldList : MutableStateFlow<List<MapleMWorld>> = MutableStateFlow(getWorldListUseCase())
@@ -61,7 +59,7 @@ class SearchViewModel @Inject constructor(
             getCharacterUseCase(name = name, worldName = world.name)
                 .onSuccess {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Success(it))
-                    addHistoryOcidUseCase(it.ocid)
+                    toggleHistoryOcidUseCase(it.ocid)
                 }.onFailure {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Failure)
                 }
@@ -82,7 +80,7 @@ class SearchViewModel @Inject constructor(
 
     fun onCharacterFavoriteClick(ocid : String) {
         viewModelScope.launch {
-            setToggleFavoriteOcidUseCase(ocid)
+            toggleFavoriteOcidUseCase(ocid)
             getCharacterUseCase(ocid = ocid)
                 .onSuccess {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.Success(it))
@@ -94,7 +92,8 @@ class SearchViewModel @Inject constructor(
 
     fun onHistoryCharacterDeleteClick(ocid : String) {
         viewModelScope.launch {
-            deleteHistoryOcidUseCase(ocid)
+            toggleHistoryOcidUseCase(ocid)
+//            deleteHistoryOcidUseCase(ocid)
             getHistoryCharacterListUseCase()
                 .onSuccess {
                     _uiState.value = SearchUiState.Success(searchState = SearchState.History(it))
