@@ -19,13 +19,11 @@ interface Repository {
 
     suspend fun toggleFavoriteOcid(ocid : String)
 
-    suspend fun getHistoryCharacterList() : Result<List<CharacterSearch>>
-
-    fun addHistoryOcid(ocid : String)
     suspend fun getFavoriteCharacterList() : Result<List<Character>>
 
-    fun deleteHistoryOcid(ocid : String)
     suspend fun isFavoriteListEmpty() : Result<Boolean>
 
+    suspend fun getHistoryCharacterList() : Result<List<CharacterSearch>>
 
+    suspend fun toggleHistoryOcid(ocid : String)
 }
