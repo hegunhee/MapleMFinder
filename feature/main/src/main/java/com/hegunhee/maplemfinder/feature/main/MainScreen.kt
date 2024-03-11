@@ -2,6 +2,7 @@ package com.hegunhee.maplemfinder.feature.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -9,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -84,6 +86,7 @@ private fun MainScreen(
                 onItemClick = favoriteClick,
                 isFavoriteItemEmpty = isFavoriteListEmpty
             )
+            Text(modifier = Modifier.fillMaxWidth(),text = "Data based on NEXON Open API", textAlign = TextAlign.End)
         }
     }
 }
